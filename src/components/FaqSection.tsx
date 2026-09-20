@@ -1,80 +1,51 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 import { FAQS, COMPANY_INFO } from '../data/pfpData';
 
 export const FaqSection: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'packages' | 'payments' | 'claims' | 'compliance'>('all');
-
-  const filteredFaqs = activeFilter === 'all'
-    ? FAQS
-    : FAQS.filter(f => f.category === activeFilter);
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-20 lg:py-28 bg-white relative overflow-hidden transition-colors duration-300">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 text-primary text-xs font-bold tracking-widest uppercase">
-            <HelpCircle className="w-3.5 h-3.5 text-accent" />
-            <span>FREQUENTLY ASKED QUESTIONS</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-primary">
-            Answers You Can Count On
+    <section id="faq" className="py-20 sm:py-28 bg-[#F5F2EB] editorial-border-b">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Tag */}
+        <div className="flex items-center gap-3 mb-6">
+          <span className="h-px w-8 bg-gold-600" />
+          <span className="text-[10px] sm:text-[11px] font-semibold tracking-widest-2xl text-gold-700 uppercase">
+            MEMBER CLARIFICATIONS &bull; FREQUENT INQUIRIES
+          </span>
+        </div>
+
+        {/* Headline */}
+        <div className="mb-14">
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-obsidian-950 leading-[1.12]">
+            Frequently Asked Questions
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Everything you need to know about PFP support packages, grocery vouchers, catering logistics, monthly payments, and claims.
+          <p className="mt-4 text-stone-600 text-base sm:text-lg font-light leading-relaxed">
+            Direct answers on grocery vouchers, catering logistics, monthly contributions, waiting periods, and claims.
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
-          {[
-            { id: 'all', label: 'All Questions' },
-            { id: 'packages', label: 'Support Packages' },
-            { id: 'payments', label: 'Payments & Premiums' },
-            { id: 'claims', label: 'Claims & Payouts' },
-            { id: 'compliance', label: 'Waiting Period & Terms' },
-          ].map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveFilter(cat.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeFilter === cat.id
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-paper-soft text-slate-600 hover:text-primary hover:bg-slate-200 border border-paper-border'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
         {/* Accordion List */}
-        <div className="space-y-3">
-          {filteredFaqs.map((faq, index) => {
-            const isOpen = openIndex === index;
+        <div className="divide-y divide-sand-300 border-t border-b border-sand-300">
+          {FAQS.map((faq, idx) => {
+            const isOpen = openIdx === idx;
             return (
-              <div
-                key={index}
-                className="rounded-2xl border border-paper-border bg-paper-soft overflow-hidden transition-all duration-200"
-              >
+              <div key={idx} className="py-6">
                 <button
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-serif font-bold text-base text-primary hover:text-accent transition-colors"
+                  onClick={() => setOpenIdx(isOpen ? null : idx)}
+                  className="w-full text-left flex items-start justify-between gap-6 group"
                 >
-                  <span>{faq.question}</span>
-                  <div
-                    className={`w-7 h-7 rounded-full bg-white flex items-center justify-center flex-shrink-0 transition-transform duration-300 shadow-xs ${
-                      isOpen ? 'rotate-180 bg-accent text-primary' : 'text-slate-400'
-                    }`}
-                  >
-                    <ChevronDown className="w-4 h-4" />
+                  <span className="font-serif text-xl sm:text-2xl text-obsidian-950 font-normal group-hover:text-gold-700 transition-colors">
+                    {faq.question}
+                  </span>
+                  <div className="w-6 h-6 flex items-center justify-center text-gold-700 flex-shrink-0 mt-1">
+                    {isOpen ? <Minus className="w-5 h-5 stroke-[1.5]" /> : <Plus className="w-5 h-5 stroke-[1.5]" />}
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-paper-border/50 pt-3 bg-white">
+                  <div className="mt-4 text-xs sm:text-sm text-stone-600 font-light leading-relaxed pr-8">
                     {faq.answer}
                   </div>
                 )}
@@ -83,29 +54,22 @@ export const FaqSection: React.FC = () => {
           })}
         </div>
 
-        {/* Support Callout */}
-        <div className="mt-12 p-6 rounded-2xl bg-paper-soft border border-paper-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Bottom Help Desk */}
+        <div className="mt-12 bg-white border border-sand-300 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center sm:text-left">
-            <div className="font-serif font-bold text-sm text-primary">Still have questions?</div>
-            <p className="text-xs text-slate-500">
-              Our compassionate customer care consultants are ready to walk you through any detail.
+            <div className="font-serif text-lg font-medium text-obsidian-950">
+              Have a specific question not covered here?
+            </div>
+            <p className="text-xs text-stone-500 font-light">
+              Our consultants are available 24/7 for compassionate assistance.
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href={`https://wa.me/${COMPANY_INFO.whatsapp.replace(/[^0-9]/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-2 shadow"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp Us</span>
-            </a>
+          <div className="flex items-center gap-4">
             <a
               href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-              className="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-light text-white font-bold text-xs shadow"
+              className="px-6 py-3 bg-obsidian-950 hover:bg-obsidian-900 text-white font-medium text-xs tracking-widest-xl uppercase border border-gold-600/40 transition-colors"
             >
-              <span>Call: {COMPANY_INFO.phone}</span>
+              Call: {COMPANY_INFO.phone}
             </a>
           </div>
         </div>

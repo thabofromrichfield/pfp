@@ -2,114 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Default: Midnight Navy & Royal Gold */
-  --color-primary: #0C1E36;
-  --color-primary-dark: #071223;
-  --color-primary-light: #162E52;
-  --color-primary-subtle: #EBF1F8;
-  
-  --color-accent: #C59B27;
-  --color-accent-dark: #9E7A18;
-  --color-accent-light: #F3DE8A;
-  --color-accent-hover: #D8AA2C;
+@layer base {
+  body {
+    background-color: #FAF8F5;
+    color: #1A1A1A;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
 
-  --color-bg-base: #FAF9F6;
-  --color-bg-soft: #F3EFE6;
-  --color-bg-card: #FFFFFF;
-  --color-border: #E5E0D5;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    letter-spacing: -0.015em;
+  }
 }
 
-[data-theme="emerald"] {
-  --color-primary: #083324;
-  --color-primary-dark: #041F16;
-  --color-primary-light: #104C37;
-  --color-primary-subtle: #E7F3EE;
-  
-  --color-accent: #C59B27;
-  --color-accent-dark: #9E7A18;
-  --color-accent-light: #F3DE8A;
-  --color-accent-hover: #D8AA2C;
-
-  --color-bg-base: #F8FAF8;
-  --color-bg-soft: #EEF4F0;
-  --color-bg-card: #FFFFFF;
-  --color-border: #DDE7E1;
+/* Subtle editorial paper texture & hairline dividers */
+.editorial-border-b {
+  border-bottom: 1px solid #EAE3D6;
 }
 
-[data-theme="burgundy"] {
-  --color-primary: #380F1E;
-  --color-primary-dark: #220711;
-  --color-primary-light: #52182D;
-  --color-primary-subtle: #FBEFF3;
-  
-  --color-accent: #D4AF37;
-  --color-accent-dark: #A5841D;
-  --color-accent-light: #FCECA6;
-  --color-accent-hover: #E3BD40;
-
-  --color-bg-base: #FAF7F8;
-  --color-bg-soft: #F4ECEE;
-  --color-bg-card: #FFFFFF;
-  --color-border: #E8DDE1;
+.editorial-border-t {
+  border-top: 1px solid #EAE3D6;
 }
 
-[data-theme="charcoal"] {
-  --color-primary: #181C24;
-  --color-primary-dark: #0D0F14;
-  --color-primary-light: #2A303D;
-  --color-primary-subtle: #EEF0F4;
-  
-  --color-accent: #C07D63;
-  --color-accent-dark: #985E48;
-  --color-accent-light: #F2C7BA;
-  --color-accent-hover: #D18D74;
-
-  --color-bg-base: #F8F9FA;
-  --color-bg-soft: #EFF1F4;
-  --color-bg-card: #FFFFFF;
-  --color-border: #E2E5EA;
+.editorial-border {
+  border: 1px solid #EAE3D6;
 }
 
-/* Custom transitions and scroll behavior */
-html {
-  scroll-behavior: smooth;
+/* Refined quote styling */
+.editorial-quote::before {
+  content: "“";
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 3.5rem;
+  line-height: 0;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #B08E41;
+  opacity: 0.6;
 }
 
-/* Subtle gold foil border effect */
-.gold-gradient-border {
-  border-image: linear-gradient(135deg, #ECC94B, #D4AF37, #B7791F) 1;
+/* Clean scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8CEBE;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9E7B35;
 }
 
-/* Gold shimmer text */
-.text-gold-shimmer {
-  background: linear-gradient(135deg, #B7791F 0%, #D4AF37 35%, #F6E05E 50%, #D4AF37 65%, #975A16 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gold-light {
-  background: linear-gradient(135deg, #ECC94B 0%, #FAF089 50%, #D4AF37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Pattern overlay */
-.bg-subtle-pattern {
-  background-image: radial-gradient(rgba(197, 155, 39, 0.08) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-/* Print Styles for Claims & Policy Summary */
 @media print {
-  header, footer, .no-print {
+  header, footer, .no-print, button {
     display: none !important;
   }
   body {
-    background: #fff !important;
-    color: #000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
-  .print-only {
+  .print-area {
     display: block !important;
+    width: 100% !important;
   }
 }

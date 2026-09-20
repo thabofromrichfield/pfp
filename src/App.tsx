@@ -11,14 +11,10 @@ import { TermsAndBenefitsSection } from './components/TermsAndBenefitsSection';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
-import { ThemeCustomizerModal } from './components/ThemeCustomizerModal';
 import { AgeBand } from './types';
-import { Palette, HeartHandshake, PhoneCall } from 'lucide-react';
-import { COMPANY_INFO } from './data/pfpData';
 
 export const App: React.FC = () => {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const [selectedQuotePackage, setSelectedQuotePackage] = useState<string>('package-3');
   const [selectedQuoteAgeBand, setSelectedQuoteAgeBand] = useState<AgeBand>('18-64');
 
@@ -29,85 +25,54 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-paper text-slate-800 antialiased selection:bg-accent selection:text-white">
-      {/* Navigation */}
-      <Header
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenThemeModal={() => setIsThemeModalOpen(true)}
-      />
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E1E1E] antialiased selection:bg-gold-600 selection:text-white">
+      {/* Navigation Masthead */}
+      <Header onOpenQuote={() => handleOpenQuote()} />
 
-      {/* Main Content */}
+      {/* Main Editorial Flow */}
       <main className="flex-grow">
-        {/* Hero Section */}
+        {/* Dignified Hero Section */}
         <Hero onOpenQuote={() => handleOpenQuote('package-3')} />
 
-        {/* About Us & Built From Real Experience */}
+        {/* About & The 10+ Years Catering Reality */}
         <AboutSection />
 
-        {/* Our Support Packages */}
+        {/* Schedule of Support Packages (1, 2, and 3 with 18-64 & 65-75 pricing) */}
         <PackagesSection onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
 
-        {/* 500-Person Catering Deep-Dive */}
+        {/* Catering Logistics Spotlight for 500 Guests */}
         <CateringDeepDive onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
 
-        {/* R15,000 Supermarket Grocery Voucher System */}
+        {/* Supermarket Grocery Voucher (Up to R15,000) */}
         <GroceryVoucherSection onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
 
-        {/* Interactive Pricing & Plan Calculator */}
+        {/* Transparent Premium & Benefit Calculator */}
         <CalculatorSection
           onApplyPlan={(pkgId, ageBand) => handleOpenQuote(pkgId, ageBand)}
         />
 
-        {/* Interactive Claims Readiness & 48-72h Timeline */}
+        {/* Claims Readiness Guide & 48-72h Payout Protocol */}
         <ClaimsChecklistTool />
 
-        {/* Payments, Benefits & Policy Terms */}
+        {/* Comprehensive Policy Terms, Governance & Disclosures */}
         <TermsAndBenefitsSection />
 
         {/* Frequently Asked Questions */}
         <FaqSection />
       </main>
 
-      {/* Footer */}
-      <Footer
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenThemeModal={() => setIsThemeModalOpen(true)}
-      />
+      {/* Footer & Statutory Disclosures */}
+      <Footer onOpenQuote={() => handleOpenQuote()} />
 
-      {/* Quote / Application Modal */}
+      {/* Membership Schedule Request Modal */}
       <QuoteModal
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         initialPackageId={selectedQuotePackage}
         initialAgeBand={selectedQuoteAgeBand}
       />
-
-      {/* Color Palette Customizer Modal */}
-      <ThemeCustomizerModal
-        isOpen={isThemeModalOpen}
-        onClose={() => setIsThemeModalOpen(false)}
-      />
-
-      {/* Floating Quick Action Widget (Bottom-Right) */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-2.5 items-end">
-        <button
-          onClick={() => setIsThemeModalOpen(true)}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white text-slate-700 shadow-lg border border-paper-border hover:border-accent hover:text-accent transition-all text-xs font-bold"
-          title="Customize Theme & Colors"
-        >
-          <Palette className="w-4 h-4 text-accent" />
-          <span className="hidden sm:inline">Theme Colors</span>
-        </button>
-
-        <button
-          onClick={() => handleOpenQuote()}
-          className="flex items-center gap-2 px-4 py-3 rounded-full bg-accent hover:bg-accent-hover text-primary-dark font-extrabold shadow-xl hover:shadow-gold-glow transition-all text-xs uppercase tracking-wider"
-        >
-          <HeartHandshake className="w-4 h-4" />
-          <span>Get a Plan</span>
-        </button>
-      </div>
     </div>
   );
 };
+
 export default App;

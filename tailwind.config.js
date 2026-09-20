@@ -7,33 +7,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: 'var(--color-primary)',
-          dark: 'var(--color-primary-dark)',
-          light: 'var(--color-primary-light)',
-          subtle: 'var(--color-primary-subtle)',
+        sand: {
+          50: '#FAF8F5',
+          100: '#F4F0E8',
+          200: '#EAE3D6',
+          300: '#DDD4C4',
+          400: '#C5B9A4',
+          500: '#9E927E',
         },
-        accent: {
-          DEFAULT: 'var(--color-accent)',
-          dark: 'var(--color-accent-dark)',
-          light: 'var(--color-accent-light)',
-          hover: 'var(--color-accent-hover)',
+        obsidian: {
+          950: '#0F1012',
+          900: '#16171B',
+          850: '#1C1E23',
+          800: '#262830',
+          700: '#383B46',
         },
-        paper: {
-          DEFAULT: 'var(--color-bg-base)',
-          soft: 'var(--color-bg-soft)',
-          card: 'var(--color-bg-card)',
-          border: 'var(--color-border)',
+        gold: {
+          50: '#FAF7F0',
+          100: '#F4ECD8',
+          200: '#E8D6B0',
+          300: '#D5BC84',
+          400: '#C2A35C',
+          500: '#B08E41',
+          600: '#9E7B35',
+          700: '#7F6024',
+          800: '#62491B',
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
-      boxShadow: {
-        'luxury': '0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04)',
-        'luxury-hover': '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.06)',
-        'gold-glow': '0 0 30px rgba(212, 175, 55, 0.25)',
+      letterSpacing: {
+        'widest-xl': '0.2em',
+        'widest-2xl': '0.28em',
       }
     },
   },

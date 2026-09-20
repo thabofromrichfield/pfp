@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, Check, ArrowRight, Shield, Sparkles, ShoppingBag, Banknote, Utensils } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SUPPORT_PACKAGES } from '../data/pfpData';
 import { AgeBand } from '../types';
 
@@ -22,67 +22,83 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
   const dailyCost = (premium / 30).toFixed(2);
 
   return (
-    <section id="calculator" className="py-20 lg:py-28 bg-white relative overflow-hidden transition-colors duration-300">
+    <section id="calculator" className="py-20 sm:py-28 bg-[#FAF8F5] editorial-border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 text-primary text-xs font-bold tracking-widest uppercase">
-            <Calculator className="w-3.5 h-3.5 text-accent" />
-            <span>TRANSPARENT PRICING CALCULATOR</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-primary">
-            Clear. Simple. Transparent.
+        {/* Section Tag */}
+        <div className="flex items-center gap-3 mb-6">
+          <span className="h-px w-8 bg-gold-600" />
+          <span className="text-[10px] sm:text-[11px] font-semibold tracking-widest-2xl text-gold-700 uppercase">
+            CLEAR. SIMPLE. TRANSPARENT. &bull; MONTHLY PREMIUM CALCULATOR
+          </span>
+        </div>
+
+        {/* Headline */}
+        <div className="max-w-3xl mb-14">
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-obsidian-950 leading-[1.12]">
+            Calculate Your Monthly Contribution
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Choose your age band and preferred support package below to see your confirmed monthly premium and complete schedule of benefits.
+          <p className="mt-4 text-stone-600 text-base sm:text-lg font-light leading-relaxed">
+            Choose the principal member age band and support package below to see your confirmed monthly premium and schedule of benefits.
           </p>
         </div>
 
-        {/* Interactive Box */}
-        <div className="max-w-5xl mx-auto bg-paper-soft rounded-3xl border border-paper-border p-6 sm:p-10 lg:p-12 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Controls: Age & Package selection */}
+        {/* Calculator Main Layout */}
+        <div className="bg-white border border-sand-300 p-8 sm:p-12 lg:p-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Controls */}
             <div className="lg:col-span-7 space-y-8">
               {/* Step 1: Age Band */}
               <div className="space-y-3">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
-                  Step 1: Select Principal Member Age Band
-                </label>
-                <div className="grid grid-cols-2 gap-3">
+                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-stone-500 block">
+                  Step 1 &bull; Select Principal Member Age Band
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button
                     onClick={() => setSelectedAgeBand('18-64')}
-                    className={`p-4 rounded-2xl border-2 text-left transition-all ${
+                    className={`p-5 text-left border transition-all ${
                       selectedAgeBand === '18-64'
-                        ? 'border-accent bg-white shadow-md text-primary'
-                        : 'border-paper-border bg-white/50 text-slate-600 hover:bg-white'
+                        ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
+                        : 'border-sand-300 bg-white hover:border-sand-400'
                     }`}
                   >
-                    <div className="text-xs uppercase font-bold text-slate-400">Category A</div>
-                    <div className="font-serif text-lg font-bold text-primary">18 – 64 Years</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">Standard working age cover</div>
+                    <div className="text-[10px] uppercase font-semibold text-stone-400 tracking-wider">
+                      Principal Age Group
+                    </div>
+                    <div className="font-serif text-2xl font-normal text-obsidian-950 mt-1">
+                      18 – 64 Years
+                    </div>
+                    <p className="text-xs text-stone-500 mt-1 font-light">
+                      Standard working age membership
+                    </p>
                   </button>
 
                   <button
                     onClick={() => setSelectedAgeBand('65-75')}
-                    className={`p-4 rounded-2xl border-2 text-left transition-all ${
+                    className={`p-5 text-left border transition-all ${
                       selectedAgeBand === '65-75'
-                        ? 'border-accent bg-white shadow-md text-primary'
-                        : 'border-paper-border bg-white/50 text-slate-600 hover:bg-white'
+                        ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
+                        : 'border-sand-300 bg-white hover:border-sand-400'
                     }`}
                   >
-                    <div className="text-xs uppercase font-bold text-slate-400">Category B</div>
-                    <div className="font-serif text-lg font-bold text-primary">65 – 75 Years</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">Senior member cover</div>
+                    <div className="text-[10px] uppercase font-semibold text-stone-400 tracking-wider">
+                      Principal Age Group
+                    </div>
+                    <div className="font-serif text-2xl font-normal text-obsidian-950 mt-1">
+                      65 – 75 Years
+                    </div>
+                    <p className="text-xs text-stone-500 mt-1 font-light">
+                      Senior member coverage
+                    </p>
                   </button>
                 </div>
               </div>
 
-              {/* Step 2: Package Selection */}
+              {/* Step 2: Package Choice */}
               <div className="space-y-3">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
-                  Step 2: Choose Your Support Package
-                </label>
-                <div className="space-y-2.5">
+                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-stone-500 block">
+                  Step 2 &bull; Select Support Package
+                </span>
+                <div className="space-y-3">
                   {SUPPORT_PACKAGES.map((pkg) => {
                     const isSelected = selectedPackageId === pkg.id;
                     const price =
@@ -94,32 +110,31 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
                       <button
                         key={pkg.id}
                         onClick={() => setSelectedPackageId(pkg.id)}
-                        className={`w-full p-4 rounded-2xl border-2 text-left flex items-center justify-between transition-all ${
+                        className={`w-full p-5 text-left border flex items-center justify-between transition-all ${
                           isSelected
-                            ? 'border-primary bg-white shadow-md'
-                            : 'border-paper-border bg-white/60 hover:bg-white'
+                            ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
+                            : 'border-sand-300 bg-white hover:border-sand-400'
                         }`}
                       >
-                        <div className="space-y-0.5 pr-4">
+                        <div className="space-y-1 pr-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-serif font-bold text-base text-primary">
-                              {pkg.name}
-                            </span>
-                            <span className="text-[11px] font-bold text-accent uppercase tracking-wider">
-                              &bull; {pkg.tagline}
+                            <span className="font-serif text-lg font-medium text-obsidian-950">
+                              {pkg.name}: {pkg.tagline}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-500 line-clamp-1">{pkg.headline}</p>
+                          <p className="text-xs text-stone-500 line-clamp-1 font-light">
+                            {pkg.headline}
+                          </p>
                         </div>
 
                         <div className="text-right flex-shrink-0">
-                          <div className="font-serif text-xl font-bold text-primary">
+                          <div className="font-serif text-2xl text-obsidian-950 font-normal">
                             R{price}
-                            <span className="text-xs font-normal text-slate-500">/mo</span>
+                            <span className="text-xs text-stone-400 font-sans">/mo</span>
                           </div>
-                          <div className="text-[10px] text-slate-400">
-                            Value: R{pkg.totalValue.toLocaleString()}
-                          </div>
+                          <span className="text-[10px] text-stone-400 tracking-wider uppercase">
+                            Value R{pkg.totalValue.toLocaleString()}
+                          </span>
                         </div>
                       </button>
                     );
@@ -128,75 +143,72 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
               </div>
             </div>
 
-            {/* Right Card: Instant Calculation Summary */}
+            {/* Right Summary Ledger */}
             <div className="lg:col-span-5">
-              <div className="rounded-3xl bg-primary text-white p-6 sm:p-8 shadow-2xl border-2 border-accent/40 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/15 rounded-full blur-xl" />
-
-                <div className="relative border-b border-white/10 pb-5">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
-                    ESTIMATED MONTHLY CONTRIBUTION
+              <div className="bg-[#17181C] text-white p-8 sm:p-10 space-y-6">
+                <div className="border-b border-white/10 pb-6">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+                    CONFIRMED MONTHLY PREMIUM
                   </span>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className="font-serif text-5xl font-black text-accent">
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="font-serif text-5xl sm:text-6xl text-gold-400 font-normal">
                       R{premium}
                     </span>
-                    <span className="text-sm text-slate-300 font-medium">/ month</span>
+                    <span className="text-xs text-stone-400 font-light">/ month</span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-1">
-                    Equates to only <strong className="text-white">R{dailyCost}</strong> per day for full peace of mind.
-                  </p>
+                  <div className="text-xs text-stone-400 mt-2 font-serif italic">
+                    Equates to approximately R{dailyCost} per day for total peace of mind.
+                  </div>
                 </div>
 
-                {/* Breakdown List */}
-                <div className="relative space-y-3 text-xs">
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="flex items-center gap-1.5">
-                      <ShoppingBag className="w-3.5 h-3.5 text-accent" />
-                      <span>Grocery Support Voucher:</span>
-                    </span>
-                    <span className="font-bold text-white">Up to R15,000</span>
+                {/* Schedule Breakdown */}
+                <div className="space-y-3.5 text-xs">
+                  <div className="flex items-center justify-between text-stone-300">
+                    <span>Package:</span>
+                    <span className="font-medium text-white">{selectedPackage.name}</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="flex items-center gap-1.5">
-                      <Banknote className="w-3.5 h-3.5 text-accent" />
-                      <span>Cash Benefit Payout:</span>
-                    </span>
-                    <span className="font-bold text-white">
-                      {selectedPackage.cashBenefit
-                        ? `R${selectedPackage.cashBenefit.toLocaleString()}`
-                        : '—'}
+                  <div className="flex items-center justify-between text-stone-300">
+                    <span>Principal Age:</span>
+                    <span className="font-medium text-white">{selectedAgeBand} years</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-stone-300">
+                    <span>Grocery Support Voucher:</span>
+                    <span className="font-medium text-white">Up to R15,000</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-stone-300">
+                    <span>Cash Benefit Payout:</span>
+                    <span className="font-medium text-white">
+                      {selectedPackage.cashBenefit ? `R${selectedPackage.cashBenefit.toLocaleString()}` : '—'}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="flex items-center gap-1.5">
-                      <Utensils className="w-3.5 h-3.5 text-accent" />
-                      <span>500-Person Catering:</span>
-                    </span>
-                    <span className="font-bold text-white">
+                  <div className="flex items-center justify-between text-stone-300">
+                    <span>500-Person Catering Support:</span>
+                    <span className="font-medium text-white">
                       {selectedPackage.cateringGuests ? 'Fully Included' : '—'}
                     </span>
                   </div>
 
-                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-accent font-serif font-bold text-sm">
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between font-serif text-base text-gold-400">
                     <span>Total Benefit Value:</span>
                     <span>R{selectedPackage.totalValue.toLocaleString()}</span>
                   </div>
                 </div>
 
                 {/* Apply Button */}
-                <div className="relative pt-2">
+                <div className="pt-2">
                   <button
                     onClick={() => onApplyPlan(selectedPackage.id, selectedAgeBand)}
-                    className="w-full py-4 rounded-xl bg-accent hover:bg-accent-hover text-primary-dark font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2 group"
+                    className="w-full py-4 bg-gold-600 hover:bg-gold-500 text-obsidian-950 font-semibold text-xs tracking-widest-xl uppercase transition-colors flex items-center justify-center gap-2"
                   >
                     <span>Apply for {selectedPackage.name}</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
-                  <p className="text-[10px] text-center text-slate-400 mt-2">
-                    Guaranteed 48–72h turnaround on approved claims
+                  <p className="text-[10px] text-center text-stone-400 mt-3 font-serif italic">
+                    48–72 hour claim turnaround &bull; 6-month natural death waiting period
                   </p>
                 </div>
               </div>
