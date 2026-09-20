@@ -22,34 +22,34 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
   const dailyCost = (premium / 30).toFixed(2);
 
   return (
-    <section id="calculator" className="py-20 sm:py-28 bg-[#FAF8F5] editorial-border-b">
+    <section id="calculator" className="py-20 sm:py-28 bg-[#0D0E12] border-b border-gold-500/20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Tag */}
         <div className="flex items-center gap-3 mb-6">
-          <span className="h-px w-8 bg-gold-600" />
-          <span className="text-[10px] sm:text-[11px] font-semibold tracking-widest-2xl text-gold-700 uppercase">
+          <span className="h-px w-10 bg-gold-500" />
+          <span className="text-[11px] font-bold tracking-widest-2xl gold-text-gradient uppercase">
             CLEAR. SIMPLE. TRANSPARENT. &bull; MONTHLY PREMIUM CALCULATOR
           </span>
         </div>
 
         {/* Headline */}
         <div className="max-w-3xl mb-14">
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-obsidian-950 leading-[1.12]">
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white leading-[1.12]">
             Calculate Your Monthly Contribution
           </h2>
-          <p className="mt-4 text-stone-600 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-stone-300 text-base sm:text-lg font-light leading-relaxed">
             Choose the principal member age band and support package below to see your confirmed monthly premium and schedule of benefits.
           </p>
         </div>
 
         {/* Calculator Main Layout */}
-        <div className="bg-white border border-sand-300 p-8 sm:p-12 lg:p-16">
+        <div className="dark-glass-card p-8 sm:p-12 lg:p-16 border-gold-500/30">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Controls */}
             <div className="lg:col-span-7 space-y-8">
               {/* Step 1: Age Band */}
               <div className="space-y-3">
-                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-stone-500 block">
+                <span className="text-[10px] font-bold uppercase tracking-widest-2xl text-gold-400 block">
                   Step 1 &bull; Select Principal Member Age Band
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -57,17 +57,17 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
                     onClick={() => setSelectedAgeBand('18-64')}
                     className={`p-5 text-left border transition-all ${
                       selectedAgeBand === '18-64'
-                        ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
-                        : 'border-sand-300 bg-white hover:border-sand-400'
+                        ? 'border-gold-500 bg-[#1A1C24] ring-1 ring-gold-500 shadow-gold-glow'
+                        : 'border-stone-800 bg-[#0A0A0E] hover:border-stone-700'
                     }`}
                   >
-                    <div className="text-[10px] uppercase font-semibold text-stone-400 tracking-wider">
+                    <div className="text-[10px] uppercase font-bold text-gold-400 tracking-wider">
                       Principal Age Group
                     </div>
-                    <div className="font-serif text-2xl font-normal text-obsidian-950 mt-1">
+                    <div className="font-serif text-2xl font-normal text-white mt-1">
                       18 – 64 Years
                     </div>
-                    <p className="text-xs text-stone-500 mt-1 font-light">
+                    <p className="text-xs text-stone-400 mt-1 font-light">
                       Standard working age membership
                     </p>
                   </button>
@@ -76,17 +76,17 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
                     onClick={() => setSelectedAgeBand('65-75')}
                     className={`p-5 text-left border transition-all ${
                       selectedAgeBand === '65-75'
-                        ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
-                        : 'border-sand-300 bg-white hover:border-sand-400'
+                        ? 'border-gold-500 bg-[#1A1C24] ring-1 ring-gold-500 shadow-gold-glow'
+                        : 'border-stone-800 bg-[#0A0A0E] hover:border-stone-700'
                     }`}
                   >
-                    <div className="text-[10px] uppercase font-semibold text-stone-400 tracking-wider">
+                    <div className="text-[10px] uppercase font-bold text-gold-400 tracking-wider">
                       Principal Age Group
                     </div>
-                    <div className="font-serif text-2xl font-normal text-obsidian-950 mt-1">
+                    <div className="font-serif text-2xl font-normal text-white mt-1">
                       65 – 75 Years
                     </div>
-                    <p className="text-xs text-stone-500 mt-1 font-light">
+                    <p className="text-xs text-stone-400 mt-1 font-light">
                       Senior member coverage
                     </p>
                   </button>
@@ -95,7 +95,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
 
               {/* Step 2: Package Choice */}
               <div className="space-y-3">
-                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-stone-500 block">
+                <span className="text-[10px] font-bold uppercase tracking-widest-2xl text-gold-400 block">
                   Step 2 &bull; Select Support Package
                 </span>
                 <div className="space-y-3">
@@ -112,25 +112,25 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
                         onClick={() => setSelectedPackageId(pkg.id)}
                         className={`w-full p-5 text-left border flex items-center justify-between transition-all ${
                           isSelected
-                            ? 'border-obsidian-950 bg-sand-50/80 ring-1 ring-obsidian-950'
-                            : 'border-sand-300 bg-white hover:border-sand-400'
+                            ? 'border-gold-500 bg-[#1A1C24] ring-1 ring-gold-500 shadow-gold-glow'
+                            : 'border-stone-800 bg-[#0A0A0E] hover:border-stone-700'
                         }`}
                       >
                         <div className="space-y-1 pr-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-serif text-lg font-medium text-obsidian-950">
+                            <span className="font-serif text-lg font-medium text-white">
                               {pkg.name}: {pkg.tagline}
                             </span>
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-1 font-light">
+                          <p className="text-xs text-stone-400 line-clamp-1 font-light">
                             {pkg.headline}
                           </p>
                         </div>
 
                         <div className="text-right flex-shrink-0">
-                          <div className="font-serif text-2xl text-obsidian-950 font-normal">
+                          <div className="font-serif text-2xl text-gold-400 font-bold">
                             R{price}
-                            <span className="text-xs text-stone-400 font-sans">/mo</span>
+                            <span className="text-xs text-stone-400 font-sans font-normal">/mo</span>
                           </div>
                           <span className="text-[10px] text-stone-400 tracking-wider uppercase">
                             Value R{pkg.totalValue.toLocaleString()}
@@ -145,13 +145,13 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
 
             {/* Right Summary Ledger */}
             <div className="lg:col-span-5">
-              <div className="bg-[#17181C] text-white p-8 sm:p-10 space-y-6">
-                <div className="border-b border-white/10 pb-6">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+              <div className="bg-[#050508] border-2 border-gold-500/50 p-8 sm:p-10 space-y-6 shadow-2xl">
+                <div className="border-b border-stone-800 pb-6">
+                  <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                     CONFIRMED MONTHLY PREMIUM
                   </span>
                   <div className="flex items-baseline gap-2 mt-2">
-                    <span className="font-serif text-5xl sm:text-6xl text-gold-400 font-normal">
+                    <span className="font-serif text-5xl sm:text-6xl gold-text-gradient font-bold">
                       R{premium}
                     </span>
                     <span className="text-xs text-stone-400 font-light">/ month</span>
@@ -175,24 +175,24 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
 
                   <div className="flex items-center justify-between text-stone-300">
                     <span>Grocery Support Voucher:</span>
-                    <span className="font-medium text-white">Up to R15,000</span>
+                    <span className="font-bold text-gold-400">Up to R15,000</span>
                   </div>
 
                   <div className="flex items-center justify-between text-stone-300">
                     <span>Cash Benefit Payout:</span>
-                    <span className="font-medium text-white">
+                    <span className="font-bold text-gold-400">
                       {selectedPackage.cashBenefit ? `R${selectedPackage.cashBenefit.toLocaleString()}` : '—'}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between text-stone-300">
                     <span>500-Person Catering Support:</span>
-                    <span className="font-medium text-white">
+                    <span className="font-bold text-gold-400">
                       {selectedPackage.cateringGuests ? 'Fully Included' : '—'}
                     </span>
                   </div>
 
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between font-serif text-base text-gold-400">
+                  <div className="pt-3 border-t border-stone-800 flex items-center justify-between font-serif text-lg text-gold-300 font-bold">
                     <span>Total Benefit Value:</span>
                     <span>R{selectedPackage.totalValue.toLocaleString()}</span>
                   </div>
@@ -202,12 +202,12 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({ onApplyPla
                 <div className="pt-2">
                   <button
                     onClick={() => onApplyPlan(selectedPackage.id, selectedAgeBand)}
-                    className="w-full py-4 bg-gold-600 hover:bg-gold-500 text-obsidian-950 font-semibold text-xs tracking-widest-xl uppercase transition-colors flex items-center justify-center gap-2"
+                    className="btn-gold w-full py-4 rounded-sm text-xs tracking-widest-xl uppercase flex items-center justify-center gap-2"
                   >
                     <span>Apply for {selectedPackage.name}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-4 h-4 text-obsidian-950" />
                   </button>
-                  <p className="text-[10px] text-center text-stone-400 mt-3 font-serif italic">
+                  <p className="text-[10px] text-center text-stone-500 mt-3 font-serif italic">
                     48–72 hour claim turnaround &bull; 6-month natural death waiting period
                   </p>
                 </div>

@@ -12,19 +12,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
   };
 
   return (
-    <footer className="bg-[#121316] text-white border-t border-white/10">
+    <footer className="bg-[#060608] text-white border-t border-gold-500/20">
       {/* Top Banner Statement */}
-      <div className="border-b border-white/10 py-16 sm:py-20">
+      <div className="border-b border-stone-800 py-16 sm:py-20 bg-radial-gold-glow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8 space-y-3">
-              <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+              <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                 AT PFP, EVERY DETAIL WITH CARE.
               </span>
               <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-tight">
                 Plan ahead. Prepare your family. Let PFP support you when it matters most.
               </h3>
-              <p className="text-xs sm:text-sm text-stone-400 font-light max-w-2xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-stone-300 font-light max-w-2xl leading-relaxed">
                 Practical funeral grocery relief of up to R15,000, professional catering for up to 500 mourners, and cash benefits to ease financial and logistical pressure.
               </p>
             </div>
@@ -32,13 +32,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
               <button
                 onClick={() => onOpenQuote()}
-                className="px-8 py-4 bg-gold-600 hover:bg-gold-500 text-obsidian-950 font-semibold text-xs tracking-widest-xl uppercase transition-colors text-center"
+                className="btn-gold px-8 py-4 rounded-sm text-xs tracking-widest-xl uppercase text-center"
               >
                 Request a Support Plan
               </button>
               <a
                 href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-                className="px-8 py-3.5 bg-transparent hover:bg-white/5 text-white font-medium text-xs tracking-widest-xl uppercase text-center border border-white/20 transition-colors"
+                className="px-8 py-3.5 bg-[#121318] hover:bg-[#1A1C23] text-gold-300 font-semibold text-xs tracking-widest-xl uppercase text-center border border-gold-500/30 transition-colors"
               >
                 24/7 Helpline: {COMPANY_INFO.phone}
               </a>
@@ -54,14 +54,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
             {/* Brand Column */}
             <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 border border-gold-600/60 bg-black/40 flex items-center justify-center font-serif text-lg text-white">
+                <div className="w-11 h-11 border-2 border-gold-500 bg-black flex items-center justify-center font-serif text-xl font-bold text-gold-400 shadow-gold-glow">
                   PFP
                 </div>
                 <div>
-                  <div className="font-serif text-xl font-normal text-white leading-none">
+                  <div className="font-serif text-xl font-bold text-white leading-none">
                     PFP
                   </div>
-                  <div className="text-[9px] font-medium tracking-widest-2xl text-gold-400 uppercase mt-1">
+                  <div className="text-[9px] font-bold tracking-widest-2xl gold-text-gradient uppercase mt-1">
                     PREMIUM FUNERAL PLANNING
                   </div>
                 </div>
@@ -73,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
 
               <div className="text-xs text-stone-400 space-y-1.5 pt-2 font-light">
                 <div>Sandton City Office Tower, 5th Floor, Johannesburg</div>
-                <div>Helpline: {COMPANY_INFO.phone} | Office: {COMPANY_INFO.phoneDirect}</div>
+                <div>Helpline: <strong className="text-gold-300">{COMPANY_INFO.phone}</strong> | Direct: {COMPANY_INFO.phoneDirect}</div>
                 <div>General: {COMPANY_INFO.email}</div>
                 <div>Complaints: {COMPANY_INFO.complaintsEmail}</div>
               </div>
@@ -81,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
 
             {/* Support Packages */}
             <div className="lg:col-span-3 space-y-3">
-              <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+              <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                 Support Packages
               </span>
               <ul className="space-y-2.5 text-xs text-stone-400 font-light">
@@ -89,7 +89,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
                   <li key={pkg.id}>
                     <button
                       onClick={() => onOpenQuote(pkg.id)}
-                      className="hover:text-white transition-colors text-left"
+                      className="hover:text-gold-300 transition-colors text-left"
                     >
                       <span className="text-stone-200">{pkg.name}: {pkg.tagline}</span>
                       <span className="block text-[11px] text-stone-500">
@@ -113,35 +113,35 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
 
             {/* Governance & Information */}
             <div className="lg:col-span-3 space-y-3">
-              <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+              <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                 Policy Governance
               </span>
               <ul className="space-y-2.5 text-xs text-stone-400 font-light">
-                <li><a href="#claims" className="hover:text-white transition-colors">Claims &amp; 48–72h Payouts</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">6-Month Natural Death Waiting Period</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">Missed Payments &amp; Grace Period</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">Cancellation &amp; Statutory Cooling-off</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">Member vs PFP Responsibilities</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">POPIA Privacy &amp; Data Rights</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">Official Complaints Channel</a></li>
+                <li><a href="#claims" className="hover:text-gold-300 transition-colors">Claims &amp; 48–72h Payouts</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">6-Month Natural Death Waiting Period</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Missed Payments &amp; Grace Period</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Cancellation &amp; Statutory Cooling-off</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Member vs PFP Responsibilities</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">POPIA Privacy &amp; Data Rights</a></li>
+                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Official Complaints Channel</a></li>
               </ul>
             </div>
 
             {/* Quick Actions */}
             <div className="lg:col-span-2 space-y-4">
-              <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-400 block">
+              <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                 Navigation
               </span>
               <button
                 onClick={scrollToTop}
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-stone-300 flex items-center justify-between w-full transition-colors"
+                className="px-4 py-2 bg-[#121318] hover:bg-[#1A1C23] border border-gold-500/30 text-xs text-gold-300 flex items-center justify-between w-full transition-colors rounded-sm"
               >
                 <span>Return to Top</span>
                 <ArrowUp className="w-3.5 h-3.5 text-gold-400" />
               </button>
 
-              <div className="p-3 bg-white/5 border border-white/10 text-[11px] text-stone-400 font-light">
-                <div className="text-white font-medium mb-1">POPIA Protection</div>
+              <div className="p-3 bg-[#121318] border border-gold-500/20 text-[11px] text-stone-400 font-light">
+                <div className="text-gold-300 font-medium mb-1">POPIA Protection</div>
                 Handled in accordance with South Africa&apos;s Protection of Personal Information Act.
               </div>
             </div>
@@ -150,12 +150,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
       </div>
 
       {/* Statutory Footer Disclosures */}
-      <div className="bg-black/60 border-t border-white/5 py-8">
+      <div className="bg-[#030304] border-t border-stone-800 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 text-stone-500 text-[11px] leading-relaxed font-light">
           <p>
             <strong>Underwriting &amp; Regulatory Notice:</strong> Premium Funeral Planning (PFP) brings together advance planning, supermarket grocery vouchers, and professional funeral catering services. Membership benefits are subject to the applicable waiting periods, eligibility requirements, exclusions, premium status, and claims documentation requirements. The current PFP proposal provides for a 6-month waiting period for natural death, subject to final underwriting approval and policy wording. Where a benefit is subject to an insurer&apos;s assessment, PFP cannot guarantee that a claim will be approved.
           </p>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-white/5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-stone-900">
             <div>
               &copy; {new Date().getFullYear()} PFP &bull; PREMIUM FUNERAL PLANNING. All Rights Reserved. Every detail with Care.
             </div>

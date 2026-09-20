@@ -4,55 +4,89 @@
 
 @layer base {
   body {
-    background-color: #FAF8F5;
-    color: #1A1A1A;
+    background-color: #08080A;
+    color: #F1F5F9;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
     letter-spacing: -0.015em;
   }
 }
 
-/* Subtle editorial paper texture & hairline dividers */
-.editorial-border-b {
-  border-bottom: 1px solid #EAE3D6;
+/* Luminous Gold Foil Gradient Text */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #ECC868 0%, #FFF3C4 35%, #D4AF37 55%, #AA801E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.editorial-border-t {
-  border-top: 1px solid #EAE3D6;
+.gold-text-shimmer {
+  background: linear-gradient(90deg, #D4AF37 0%, #FFF5D1 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.editorial-border {
-  border: 1px solid #EAE3D6;
+/* Metallic Gold Button */
+.btn-gold {
+  background: linear-gradient(135deg, #ECC868 0%, #D4AF37 50%, #B8860B 100%);
+  color: #070709;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
 }
 
-/* Refined quote styling */
-.editorial-quote::before {
-  content: "“";
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 3.5rem;
-  line-height: 0;
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #B08E41;
-  opacity: 0.6;
+.btn-gold:hover {
+  background: linear-gradient(135deg, #FFF0B8 0%, #ECC868 50%, #C4971A 100%);
+  box-shadow: 0 6px 30px rgba(212, 175, 55, 0.45);
+  transform: translateY(-1px);
 }
 
-/* Clean scrollbar */
+/* Gold Hairline Dividers */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.4) 50%, transparent 100%);
+}
+
+.gold-divider-solid {
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+/* Deep Obsidian Glass Card */
+.dark-glass-card {
+  background-color: #121318;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(212, 175, 55, 0.1);
+}
+
+.dark-glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.18);
+}
+
+/* Ambient Radial Glows */
+.bg-radial-gold-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+}
+
+.bg-radial-gold-center {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF8F5;
+  background: #08080A;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8CEBE;
+  background: #2A2824;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9E7B35;
+  background: #D4AF37;
 }
 
 @media print {

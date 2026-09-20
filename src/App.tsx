@@ -25,13 +25,13 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E1E1E] antialiased selection:bg-gold-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#08080A] text-[#F1F5F9] antialiased selection:bg-[#D4AF37] selection:text-black">
       {/* Navigation Masthead */}
       <Header onOpenQuote={() => handleOpenQuote()} />
 
-      {/* Main Editorial Flow */}
+      {/* Main Content Flow */}
       <main className="flex-grow">
-        {/* Dignified Hero Section */}
+        {/* Dignified Black & Gold Hero Section */}
         <Hero onOpenQuote={() => handleOpenQuote('package-3')} />
 
         {/* About & The 10+ Years Catering Reality */}

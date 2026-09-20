@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Utensils, Flame, ChefHat, Sparkles, CheckCircle2 } from 'lucide-react';
 
 interface CateringDeepDiveProps {
   onSelectPackage: (pkgId: string) => void;
@@ -10,12 +10,12 @@ export const CateringDeepDive: React.FC<CateringDeepDiveProps> = ({ onSelectPack
     {
       number: '01',
       title: 'Professional Cooking Team',
-      desc: 'Trained, respectful kitchen personnel take full command of meal preparation, timing, and traditional recipes so immediate family never have to stand over smoke and fires.'
+      desc: 'Trained, respectful kitchen personnel take complete charge of meal preparation, timing, and traditional recipes so immediate family never have to stand over smoke and fires.'
     },
     {
       number: '02',
       title: 'Dedicated Serving Stations',
-      desc: 'Hygienic buffet lines, structured dishing points, and crowd-flow management ensuring that 500 guests and community members are served smoothly and respectfully.'
+      desc: 'Hygienic buffet lines, structured dishing points, and crowd-flow management ensuring that up to 500 guests and community members are served smoothly and respectfully.'
     },
     {
       number: '03',
@@ -40,22 +40,22 @@ export const CateringDeepDive: React.FC<CateringDeepDiveProps> = ({ onSelectPack
   ];
 
   return (
-    <section id="catering" className="py-20 sm:py-28 bg-[#FAF8F5] editorial-border-b">
+    <section id="catering" className="py-20 sm:py-28 bg-[#0D0E12] border-b border-gold-500/20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Tag */}
         <div className="flex items-center gap-3 mb-6">
-          <span className="h-px w-8 bg-gold-600" />
-          <span className="text-[10px] sm:text-[11px] font-semibold tracking-widest-2xl text-gold-700 uppercase">
+          <span className="h-px w-10 bg-gold-500" />
+          <span className="text-[11px] font-bold tracking-widest-2xl gold-text-gradient uppercase">
             10+ YEARS CATERING FOUNDATION &bull; PACKAGE 3 SPOTLIGHT
           </span>
         </div>
 
         {/* Headline */}
         <div className="max-w-4xl mb-16">
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-obsidian-950 leading-[1.12]">
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white leading-[1.12]">
             Why catering is the responsibility families need the most help managing.
           </h2>
-          <p className="mt-4 text-stone-600 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-stone-300 text-base sm:text-lg font-light leading-relaxed">
             During a funeral, feeding up to 500 family members and community mourners is an enormous physical and logistical undertaking. From sourcing industrial pots to standing over fires for 48 hours, the burden almost always falls on grieving grandmothers, aunts, and siblings.
           </p>
         </div>
@@ -65,15 +65,15 @@ export const CateringDeepDive: React.FC<CateringDeepDiveProps> = ({ onSelectPack
           {pillars.map((pillar) => (
             <div
               key={pillar.number}
-              className="bg-white border border-sand-300 p-8 space-y-3 relative group hover:border-gold-600 transition-colors"
+              className="dark-glass-card p-8 space-y-3 relative group"
             >
-              <div className="font-serif text-3xl text-gold-700 font-normal">
+              <div className="font-serif text-3xl gold-text-gradient font-bold">
                 {pillar.number}
               </div>
-              <h3 className="font-serif text-xl font-medium text-obsidian-950">
+              <h3 className="font-serif text-xl font-medium text-white group-hover:text-gold-300 transition-colors">
                 {pillar.title}
               </h3>
-              <p className="text-xs text-stone-600 leading-relaxed font-light">
+              <p className="text-xs text-stone-300 leading-relaxed font-light">
                 {pillar.desc}
               </p>
             </div>
@@ -81,33 +81,33 @@ export const CateringDeepDive: React.FC<CateringDeepDiveProps> = ({ onSelectPack
         </div>
 
         {/* Contrast Table: Traditional Burden vs PFP Practical Support */}
-        <div className="bg-[#F5F2EB] border border-sand-300 p-8 sm:p-12">
+        <div className="bg-[#121318] border border-gold-500/30 p-8 sm:p-12 shadow-2xl">
           <div className="max-w-2xl mb-8">
-            <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-700 block">
+            <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
               THE LOGISTICAL DIFFERENCE
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-obsidian-950 mt-1">
+            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-white mt-1">
               Conventional Funeral Cover vs PFP Package 3
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 divide-y md:divide-y-0 md:divide-x divide-sand-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 divide-y md:divide-y-0 md:divide-x divide-stone-800">
             {/* The Old Burden */}
             <div className="space-y-4 md:pr-8 pt-4 md:pt-0">
-              <div className="font-serif text-lg text-stone-900 font-medium">
+              <div className="font-serif text-lg text-stone-300 font-medium">
                 The Conventional Reality (Cash Only)
               </div>
-              <ul className="space-y-3 text-xs sm:text-sm text-stone-600 font-light">
+              <ul className="space-y-3 text-xs sm:text-sm text-stone-400 font-light">
                 <li className="flex items-start gap-2.5">
-                  <span className="text-stone-400 font-serif">—</span>
+                  <span className="text-stone-500 font-serif font-bold">—</span>
                   <span>A cash payout requires the grieving family to frantically locate, interview, and negotiate with private caterers under intense emotional distress.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-stone-400 font-serif">—</span>
+                  <span className="text-stone-500 font-serif font-bold">—</span>
                   <span>Close relatives spend the vigil and funeral days peeling vegetables, tending wood smoke, and washing giant pots instead of mourning peacefully.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-stone-400 font-serif">—</span>
+                  <span className="text-stone-500 font-serif font-bold">—</span>
                   <span>The family must locate and rent gas bottles, cauldrons, and serving tables separately, paying steep short-notice deposits.</span>
                 </li>
               </ul>
@@ -115,36 +115,36 @@ export const CateringDeepDive: React.FC<CateringDeepDiveProps> = ({ onSelectPack
 
             {/* The PFP Way */}
             <div className="space-y-4 md:pl-8 pt-6 md:pt-0">
-              <div className="font-serif text-lg text-gold-800 font-medium">
+              <div className="font-serif text-lg gold-text-gradient font-semibold">
                 The PFP Practical Relief Model
               </div>
-              <ul className="space-y-3 text-xs sm:text-sm text-stone-800">
+              <ul className="space-y-3 text-xs sm:text-sm text-stone-200">
                 <li className="flex items-start gap-2.5">
-                  <span className="text-gold-700 font-serif font-bold">&bull;</span>
+                  <span className="text-gold-400 font-serif font-bold">&bull;</span>
                   <span><strong>Full Turnkey Catering:</strong> A professional culinary team arrives equipped to feed up to 500 mourners with dignity and hygiene.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-gold-700 font-serif font-bold">&bull;</span>
+                  <span className="text-gold-400 font-serif font-bold">&bull;</span>
                   <span><strong>Family Sits in Remembrance:</strong> Your family members spend the funeral remembering their loved one, not carrying pots or queuing at stoves.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="text-gold-700 font-serif font-bold">&bull;</span>
+                  <span className="text-gold-400 font-serif font-bold">&bull;</span>
                   <span><strong>Complete Equipment &amp; Clean-Up:</strong> Industrial gas burners, pots, serving utensils, and full post-service site clean-up included.</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-10 pt-6 border-t border-sand-300 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-xs text-stone-500 font-serif italic">
+          <div className="mt-10 pt-6 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span className="text-xs text-stone-400 font-serif italic">
               Total Package 3 Value: R30,000 &bull; Premiums from R445/month
             </span>
             <button
               onClick={() => onSelectPackage('package-3')}
-              className="px-6 py-3 bg-obsidian-950 text-white font-medium text-xs tracking-widest-xl uppercase border border-gold-600/40 hover:bg-obsidian-900 transition-colors flex items-center gap-2"
+              className="btn-gold px-7 py-3.5 rounded-sm text-xs tracking-widest-xl uppercase flex items-center gap-2"
             >
               <span>Choose Package 3 (Grocery + Catering)</span>
-              <ArrowRight className="w-3.5 h-3.5 text-gold-400" />
+              <ArrowRight className="w-3.5 h-3.5 text-obsidian-950" />
             </button>
           </div>
         </div>

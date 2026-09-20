@@ -50,19 +50,19 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   const refNumber = `PFP-${Math.floor(100000 + Math.random() * 900000)}`;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="relative bg-white border border-sand-300 max-w-2xl w-full overflow-hidden shadow-2xl my-8">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="relative bg-[#0D0E12] border-2 border-gold-500/50 max-w-2xl w-full overflow-hidden shadow-gold-glow-lg my-8">
         {/* Modal Header */}
-        <div className="bg-[#17181C] text-white p-8 relative border-b border-white/10">
+        <div className="bg-[#060608] text-white p-8 relative border-b border-gold-500/30">
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 w-8 h-8 text-stone-400 hover:text-white flex items-center justify-center transition-colors"
+            className="absolute top-6 right-6 w-8 h-8 text-stone-400 hover:text-gold-400 flex items-center justify-center transition-colors"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <span className="text-[10px] uppercase font-semibold tracking-widest-2xl text-gold-400 block mb-2">
+          <span className="text-[10px] uppercase font-bold tracking-widest-2xl gold-text-gradient block mb-2">
             MEMBERSHIP ENROLMENT &bull; SCHEDULE OF COVER
           </span>
           <h3 className="font-serif text-3xl font-normal text-white">
@@ -74,48 +74,48 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
         </div>
 
         {/* Modal Content */}
-        <div className="p-8 max-h-[75vh] overflow-y-auto bg-[#FAF8F5]">
+        <div className="p-8 max-h-[75vh] overflow-y-auto bg-[#0D0E12]">
           {submitted ? (
             <div className="text-center py-8 space-y-6">
-              <div className="w-14 h-14 border border-gold-600 bg-sand-50 flex items-center justify-center mx-auto text-gold-800">
-                <Check className="w-8 h-8 stroke-[2]" />
+              <div className="w-16 h-16 border-2 border-gold-500 bg-[#14151C] flex items-center justify-center mx-auto text-gold-400 shadow-gold-glow">
+                <Check className="w-8 h-8 stroke-[2.5]" />
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-gold-700">
+                <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient">
                   APPLICATION PROVISIONALLY REGISTERED
                 </span>
-                <h4 className="font-serif text-3xl font-normal text-obsidian-950">
+                <h4 className="font-serif text-3xl font-normal text-white">
                   Thank You, {fullName || 'Valued Member'}
                 </h4>
-                <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed font-light">
-                  Your official registration reference is <strong>{refNumber}</strong>. A dedicated PFP membership officer will contact you on <strong>{phone}</strong> to confirm your details and issue your membership policy document.
+                <p className="text-xs sm:text-sm text-stone-300 max-w-md mx-auto leading-relaxed font-light">
+                  Your official registration reference is <strong className="text-gold-300">{refNumber}</strong>. A dedicated PFP membership officer will contact you on <strong className="text-gold-300">{phone}</strong> to confirm your details and issue your membership policy document.
                 </p>
               </div>
 
-              <div className="bg-white border border-sand-300 p-6 text-left max-w-md mx-auto space-y-2.5 text-xs text-stone-700">
-                <div className="flex justify-between border-b border-sand-200 pb-2">
-                  <span className="font-serif text-base text-obsidian-950">{currentPkg.name}: {currentPkg.tagline}</span>
-                  <span className="font-serif font-bold text-gold-800 text-base">R{currentPremium} / mo</span>
+              <div className="bg-[#121318] border border-gold-500/30 p-6 text-left max-w-md mx-auto space-y-2.5 text-xs text-stone-300">
+                <div className="flex justify-between border-b border-stone-800 pb-2">
+                  <span className="font-serif text-base text-white">{currentPkg.name}: {currentPkg.tagline}</span>
+                  <span className="font-serif font-bold gold-text-gradient text-lg">R{currentPremium} / mo</span>
                 </div>
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-stone-400">
                   <span>Principal Member Age:</span>
-                  <span>{selectedAgeBand} years</span>
+                  <span className="text-white">{selectedAgeBand} years</span>
                 </div>
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-stone-400">
                   <span>Total Benefit Value:</span>
-                  <span>R{currentPkg.totalValue.toLocaleString()}</span>
+                  <span className="text-gold-300 font-semibold">R{currentPkg.totalValue.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-stone-400">
                   <span>Natural Death Waiting Period:</span>
-                  <span>6 months</span>
+                  <span className="text-white">6 months</span>
                 </div>
               </div>
 
               <div className="pt-4">
                 <button
                   onClick={handleReset}
-                  className="px-8 py-3.5 bg-obsidian-950 text-white font-medium text-xs tracking-widest-xl uppercase border border-gold-600/40 hover:bg-obsidian-900 transition-colors"
+                  className="btn-gold px-8 py-3.5 rounded-sm text-xs tracking-widest-xl uppercase"
                 >
                   Return to Website
                 </button>
@@ -124,16 +124,16 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Package & Age Header */}
-              <div className="bg-white border border-sand-300 p-6 space-y-4">
+              <div className="bg-[#121318] border border-gold-500/30 p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-stone-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gold-400 mb-1">
                       Support Package
                     </label>
                     <select
                       value={selectedPkgId}
                       onChange={(e) => setSelectedPkgId(e.target.value)}
-                      className="w-full bg-sand-50 border border-sand-300 px-3 py-2 text-xs font-serif text-obsidian-950 font-medium outline-none"
+                      className="w-full bg-[#0A0A0E] border border-gold-500/30 px-3 py-2 text-xs font-serif text-white font-medium outline-none focus:border-gold-400"
                     >
                       {SUPPORT_PACKAGES.map((pkg) => (
                         <option key={pkg.id} value={pkg.id}>
@@ -144,17 +144,17 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-stone-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gold-400 mb-1">
                       Principal Age Band
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setSelectedAgeBand('18-64')}
-                        className={`py-2 text-xs font-semibold uppercase tracking-wider border ${
+                        className={`py-2 text-xs font-bold uppercase tracking-wider border ${
                           selectedAgeBand === '18-64'
-                            ? 'bg-obsidian-950 text-white border-obsidian-950'
-                            : 'bg-white text-stone-600 border-sand-300'
+                            ? 'btn-gold shadow-gold-glow'
+                            : 'bg-[#0A0A0E] text-stone-400 border-stone-800'
                         }`}
                       >
                         18–64 Yrs
@@ -162,10 +162,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       <button
                         type="button"
                         onClick={() => setSelectedAgeBand('65-75')}
-                        className={`py-2 text-xs font-semibold uppercase tracking-wider border ${
+                        className={`py-2 text-xs font-bold uppercase tracking-wider border ${
                           selectedAgeBand === '65-75'
-                            ? 'bg-obsidian-950 text-white border-obsidian-950'
-                            : 'bg-white text-stone-600 border-sand-300'
+                            ? 'btn-gold shadow-gold-glow'
+                            : 'bg-[#0A0A0E] text-stone-400 border-stone-800'
                         }`}
                       >
                         65–75 Yrs
@@ -174,24 +174,24 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   </div>
                 </div>
 
-                <div className="border-t border-sand-200 pt-3 flex items-baseline justify-between">
-                  <span className="text-xs text-stone-500 font-light">{currentPkg.headline}</span>
+                <div className="border-t border-stone-800 pt-3 flex items-baseline justify-between">
+                  <span className="text-xs text-stone-300 font-light">{currentPkg.headline}</span>
                   <div className="text-right">
-                    <span className="font-serif text-3xl font-normal text-obsidian-950">R{currentPremium}</span>
+                    <span className="font-serif text-3xl font-bold gold-text-gradient">R{currentPremium}</span>
                     <span className="text-xs text-stone-400 font-light"> / month</span>
                   </div>
                 </div>
               </div>
 
               {/* Personal Details */}
-              <div className="bg-white border border-sand-300 p-6 space-y-4">
-                <span className="text-[10px] font-semibold uppercase tracking-widest-2xl text-stone-500 block">
+              <div className="bg-[#121318] border border-gold-500/30 p-6 space-y-4">
+                <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
                   Principal Applicant Information
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       Full Legal Name *
                     </label>
                     <input
@@ -200,12 +200,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. Thabo Mokoena"
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none focus:border-obsidian-950"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       South African ID / Passport *
                     </label>
                     <input
@@ -215,12 +215,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       onChange={(e) => setIdNumber(e.target.value)}
                       placeholder="13-digit RSA ID"
                       maxLength={13}
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none focus:border-obsidian-950"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       Mobile Number (Calls &amp; WhatsApp) *
                     </label>
                     <input
@@ -229,12 +229,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. 082 123 4567"
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none focus:border-obsidian-950"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       Email Address
                     </label>
                     <input
@@ -242,18 +242,18 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="thabo@example.co.za"
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none focus:border-obsidian-950"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       Province
                     </label>
                     <select
                       value={province}
                       onChange={(e) => setProvince(e.target.value)}
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     >
                       <option value="Gauteng">Gauteng</option>
                       <option value="KwaZulu-Natal">KwaZulu-Natal</option>
@@ -268,13 +268,13 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-medium text-stone-300 mb-1">
                       Preferred Payment Method
                     </label>
                     <select
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
-                      className="w-full bg-sand-50 border border-sand-300 px-3.5 py-2.5 text-xs text-obsidian-950 outline-none"
+                      className="w-full bg-[#0A0A0E] border border-stone-800 px-3.5 py-2.5 text-xs text-white outline-none focus:border-gold-500"
                     >
                       <option value="Monthly Debit Order">Monthly Debit Order</option>
                       <option value="EFT / Bank Deposit">EFT / Bank Deposit</option>
@@ -294,7 +294,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                     onChange={(e) => setAgreedTerms(e.target.checked)}
                     className="mt-1"
                   />
-                  <span className="text-[11px] text-stone-600 font-light leading-relaxed">
+                  <span className="text-[11px] text-stone-300 font-light leading-relaxed">
                     I confirm that the details provided are accurate. I acknowledge the 6-month natural death waiting period, policy terms, and POPIA privacy handling.
                   </span>
                 </label>
@@ -304,7 +304,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-4 bg-obsidian-950 hover:bg-obsidian-900 text-white font-medium text-xs tracking-widest-xl uppercase border border-gold-600/40 transition-colors"
+                  className="btn-gold w-full py-4 text-xs tracking-widest-xl uppercase rounded-sm"
                 >
                   Submit Membership Request &bull; R{currentPremium}/month
                 </button>
