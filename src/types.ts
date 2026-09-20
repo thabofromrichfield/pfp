@@ -1,4 +1,12 @@
-export type PageTab = 'home' | 'about' | 'packages' | 'catering' | 'claims' | 'terms' | 'faq';
+export type PageTab =
+  | 'home'
+  | 'about'
+  | 'packages'
+  | 'catering'
+  | 'grocery'
+  | 'claims'
+  | 'terms'
+  | 'contact';
 
 export interface SupportPackage {
   id: 'package-1' | 'package-2' | 'package-3';
@@ -6,9 +14,9 @@ export interface SupportPackage {
   name: string;
   tagline: string;
   headline: string;
-  grocerySupport: number; // e.g. 15000
-  cashBenefit?: number; // e.g. 10000
-  cateringGuests?: number; // e.g. 500
+  grocerySupport: number;
+  cashBenefit?: number;
+  cateringGuests?: number;
   totalValue: number;
   premiums: {
     age18_64: number;
@@ -35,14 +43,4 @@ export interface FaqItem {
   question: string;
   answer: string;
   category: 'packages' | 'payments' | 'claims' | 'catering' | 'compliance';
-}
-
-export interface ColorTheme {
-  id: string;
-  name: string;
-  description: string;
-  primaryHex: string;
-  accentHex: string;
-  bgHex: string;
-  badge: string;
 }

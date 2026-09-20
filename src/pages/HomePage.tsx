@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Utensils, ShoppingBag, Banknote, Clock, Award, Shield, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Clock, Utensils, ShoppingBag, Banknote, CheckCircle2 } from 'lucide-react';
 import { PageTab } from '../types';
 import { COMPANY_INFO, SUPPORT_PACKAGES } from '../data/pfpData';
 
@@ -10,150 +10,80 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ onSelectTab, onOpenQuote }) => {
   return (
-    <div className="space-y-20 pb-20">
-      {/* Hero Section with Smooth Curved Components */}
-      <section className="relative bg-radial-gold-glow pt-12 pb-16 sm:pt-20 sm:pb-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top Pill Tag */}
-          <div className="flex items-center gap-3 mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-xs tracking-widest uppercase font-semibold text-gold-300">
-              <Award className="w-3.5 h-3.5 text-gold-400" />
-              <span>PREMIUM FUNERAL PLANNING &bull; SOUTH AFRICA</span>
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column */}
-            <div className="lg:col-span-7 space-y-8">
-              <h1 className="font-serif text-4xl sm:text-6xl lg:text-[68px] font-normal text-white leading-[1.08] tracking-tight">
-                When tomorrow arrives unexpectedly, your family deserves{' '}
-                <span className="gold-text-gradient italic font-normal">quiet dignity,</span> not logistical exhaustion.
-              </h1>
-
-              <div className="border-l-2 border-gold-500 pl-6 space-y-3">
-                <p className="text-base sm:text-lg text-stone-300 font-light leading-relaxed">
-                  Our goal is to provide families with practical support that helps ease some of the financial and logistical pressure during difficult times. Through our carefully structured support packages, families receive guaranteed assistance with groceries, catering and cash benefits.
-                </p>
-                <p className="text-xs sm:text-sm text-gold-400 font-serif italic">
-                  &ldquo;Because when the unexpected happens, having a plan can make a difficult journey a little easier.&rdquo;
-                </p>
+    <div className="space-y-24 pb-24">
+      {/* Editorial Corporate Hero */}
+      <section className="pt-12 sm:pt-20 border-b border-[#1E2028] pb-16 sm:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-block border-b border-gold-500 pb-1 text-gold-500 text-xs font-semibold uppercase tracking-widest">
+                PREMIUM FUNERAL PLANNING &bull; SOUTH AFRICA
               </div>
 
+              <h1 className="font-serif text-4xl sm:text-6xl font-normal text-white leading-[1.12]">
+                Practical support that eases the financial and logistical pressure during difficult times.
+              </h1>
+
+              <p className="text-stone-300 text-base sm:text-lg font-light leading-relaxed max-w-2xl">
+                Through our carefully structured support packages, families can receive assistance with groceries, catering and other meaningful benefits, depending on the package they choose.
+              </p>
+
               {/* Action Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <button
                   onClick={() => onSelectTab('packages')}
-                  className="btn-gold px-8 py-4 text-xs tracking-widest-xl uppercase flex items-center justify-center gap-3 group"
+                  className="btn-primary-gold px-8 py-4 rounded text-xs tracking-wider uppercase flex items-center justify-center gap-2.5 font-bold"
                 >
-                  <span>Explore Support Packages</span>
-                  <ArrowRight className="w-4 h-4 text-obsidian-950 group-hover:translate-x-1 transition-transform" />
+                  <span>View Support Packages</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
 
                 <button
                   onClick={() => onSelectTab('catering')}
-                  className="px-7 py-4 rounded-full bg-[#14151D] hover:bg-[#1E202B] text-gold-300 font-semibold text-xs tracking-widest-xl uppercase transition-all duration-200 border border-gold-500/30 text-center"
+                  className="btn-secondary-dark px-7 py-4 rounded text-xs tracking-wider uppercase text-center font-medium"
                 >
-                  500-Guest Catering &amp; Groceries
+                  500-Person Catering Full Details
                 </button>
               </div>
 
-              {/* Trust Indicators */}
-              <div className="pt-4 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs text-stone-400 border-t border-stone-800">
+              {/* Assurance Line */}
+              <div className="pt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone-400 border-t border-[#1C1F26]">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-gold-400" />
-                  <span className="text-stone-300">48–72h Claims Payouts</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
+                  <span>48–72h Claims Payouts</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-gold-400" />
-                  <span className="text-stone-300">6-Month Natural Death Waiting Period</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
+                  <span>6-Month Natural Death Waiting Period</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-gold-400" />
-                  <span className="text-stone-300">POPIA Act Compliant</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
+                  <span>POPIA Act Compliant</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Smooth Summary Ledger Card */}
+            {/* Right Photo Framing (Clean, dignified, NO AI plastic borders) */}
             <div className="lg:col-span-5">
-              <div className="smooth-card p-8 sm:p-10 space-y-6 relative overflow-hidden">
-                <div className="border-b border-stone-800 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
-                    PFP SUMMARY SCHEDULE
-                  </span>
-                  <h3 className="font-serif text-2xl font-normal text-white mt-1">
-                    What Practical Relief Delivers
-                  </h3>
+              <div className="panel-dark rounded-lg overflow-hidden border border-[#242833] shadow-2xl">
+                <div className="relative aspect-[4/3] sm:aspect-[16/11]">
+                  <img
+                    src="/images/hero-family.jpg"
+                    alt="South African Family in Dignified Remembrance"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-transparent to-transparent" />
                 </div>
-
-                <div className="divide-y divide-stone-800/80 text-xs sm:text-sm">
-                  <div className="py-4 flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="font-serif text-base font-medium text-white flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-gold-400" />
-                        <span>Supermarket Grocery Relief</span>
-                      </div>
-                      <p className="text-stone-400 text-xs font-light">
-                        Voucher redeemable at nearest participating supermarket
-                      </p>
-                    </div>
-                    <span className="font-serif text-xl font-bold gold-text-gradient whitespace-nowrap">
-                      Up to R15,000
-                    </span>
+                <div className="p-6 bg-[#0E1015] border-t border-[#20232B] space-y-2">
+                  <div className="text-xs font-semibold text-gold-500 uppercase tracking-wider">
+                    Our Promise
                   </div>
-
-                  <div className="py-4 flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="font-serif text-base font-medium text-white flex items-center gap-2">
-                        <Utensils className="w-4 h-4 text-gold-400" />
-                        <span>Full Catering Support</span>
-                      </div>
-                      <p className="text-stone-400 text-xs font-light">
-                        Cooking team, pots, gas stoves, dishing &amp; clean-up
-                      </p>
-                    </div>
-                    <span className="font-serif text-xl font-bold gold-text-gradient whitespace-nowrap">
-                      500 Guests
-                    </span>
-                  </div>
-
-                  <div className="py-4 flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="font-serif text-base font-medium text-white flex items-center gap-2">
-                        <Banknote className="w-4 h-4 text-gold-400" />
-                        <span>Direct Cash Benefit</span>
-                      </div>
-                      <p className="text-stone-400 text-xs font-light">
-                        Paid directly into claimant&apos;s verified bank account
-                      </p>
-                    </div>
-                    <span className="font-serif text-xl font-bold gold-text-gradient whitespace-nowrap">
-                      R10,000 Cash
-                    </span>
-                  </div>
-
-                  <div className="py-4 flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="font-serif text-base font-medium text-white flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-gold-400" />
-                        <span>Claims Payout Turnaround</span>
-                      </div>
-                      <p className="text-stone-400 text-xs font-light">
-                        Expedited assessment upon document receipt
-                      </p>
-                    </div>
-                    <span className="font-serif text-xl font-bold gold-text-gradient whitespace-nowrap">
-                      48–72 Hours
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-[#0B0C10] p-4 rounded-xl border border-gold-500/20 text-xs text-stone-300 space-y-1">
-                  <div className="font-serif font-semibold text-gold-300">
-                    Built From 10+ Years Catering Experience
-                  </div>
-                  <p className="text-[11px] leading-relaxed text-stone-400 font-light">
-                    We understand the heavy behind-the-scenes burden of feeding mourning families and large gatherings.
+                  <p className="font-serif text-lg text-white italic">
+                    &ldquo;At PFP, every detail with Care.&rdquo;
+                  </p>
+                  <p className="text-xs text-stone-400 font-light leading-relaxed">
+                    We are committed to serving families with compassion, professionalism and respect, while creating practical solutions that help families feel more prepared for tomorrow.
                   </p>
                 </div>
               </div>
@@ -162,171 +92,181 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectTab, onOpenQuote }) 
         </div>
       </section>
 
-      {/* Category Discovery Portals (Smooth Navigation Gateway) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-          <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient">
-            EXPLORE OUR SERVICE CATEGORIES
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-white">
-            Comprehensive Funeral Planning, Logistical Care &amp; Support
-          </h2>
-          <p className="text-stone-400 text-xs sm:text-sm font-light">
-            Select a category below to explore full details, terms, and interactive tools.
-          </p>
+      {/* 4 Core Pillars Strip */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="panel-dark p-6 rounded-lg space-y-2">
+            <div className="flex items-center gap-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
+              <ShoppingBag className="w-4 h-4" />
+              <span>Grocery Support</span>
+            </div>
+            <div className="font-serif text-2xl text-white">Up to R15,000</div>
+            <p className="text-xs text-stone-400 font-light">
+              Redeemable at your nearest supermarket (Checkers, Shoprite, Pick n Pay, SPAR, Boxer).
+            </p>
+          </div>
+
+          <div className="panel-dark p-6 rounded-lg space-y-2">
+            <div className="flex items-center gap-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
+              <Utensils className="w-4 h-4" />
+              <span>Full Catering</span>
+            </div>
+            <div className="font-serif text-2xl text-white">Up to 500 People</div>
+            <p className="text-xs text-stone-400 font-light">
+              Cooking team, serving stations, pots, gas stoves, and complete clean-up.
+            </p>
+          </div>
+
+          <div className="panel-dark p-6 rounded-lg space-y-2">
+            <div className="flex items-center gap-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
+              <Banknote className="w-4 h-4" />
+              <span>Cash Benefit</span>
+            </div>
+            <div className="font-serif text-2xl text-white">R10,000 Cash</div>
+            <p className="text-xs text-stone-400 font-light">
+              Paid directly into the client&apos;s verified bank account (Package 2).
+            </p>
+          </div>
+
+          <div className="panel-dark p-6 rounded-lg space-y-2">
+            <div className="flex items-center gap-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
+              <Clock className="w-4 h-4" />
+              <span>Fast Turnaround</span>
+            </div>
+            <div className="font-serif text-2xl text-white">48–72 Hours</div>
+            <p className="text-xs text-stone-400 font-light">
+              Prompt claims assessment and benefit fulfillment upon document receipt.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Portal 1: Support Packages */}
-          <div
-            onClick={() => onSelectTab('packages')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <Banknote className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                Support Packages &amp; Pricing
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Review Package 1 (Grocery), Package 2 (Grocery &amp; Cash), and Package 3 (Grocery &amp; Catering) with our interactive age-band pricing calculator.
+      {/* Built From Real Experience Overview */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="panel-dark p-8 sm:p-12 rounded-lg border border-[#242833]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-8 space-y-4">
+              <span className="text-gold-500 text-xs font-semibold uppercase tracking-widest block">
+                BUILT FROM REAL EXPERIENCE
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-white font-normal">
+                More Than 10 Years Working Hand in Hand With Funeral Caterers
+              </h2>
+              <p className="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
+                Through this experience, we have seen how much goes into feeding and accommodating family members and guests during a funeral. From preparing large quantities of food to organising cooking teams, equipment, serving stations and the practical details behind the scenes; <em>Catering is a responsibility that families often need help managing.</em>
               </p>
+              <p className="text-stone-400 text-sm font-light leading-relaxed">
+                We believe that families should be able to focus on remembering and honouring their loved one, while having practical support available to help manage some of the responsibilities around them.
+              </p>
+              <div className="pt-2">
+                <button
+                  onClick={() => onSelectTab('about')}
+                  className="text-gold-400 hover:text-gold-300 font-semibold text-xs tracking-wider uppercase inline-flex items-center gap-1.5"
+                >
+                  <span>Read our full founding story &rarr;</span>
+                </button>
+              </div>
             </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>View Packages &rarr;</span>
-              <span className="text-stone-500 text-[11px]">From R295/mo</span>
-            </div>
-          </div>
 
-          {/* Portal 2: 500-Guest Catering & Groceries */}
-          <div
-            onClick={() => onSelectTab('catering')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <Utensils className="w-6 h-6" />
+            <div className="lg:col-span-4 bg-[#090A0D] p-6 rounded border border-[#20232B] space-y-4">
+              <div className="text-xs font-semibold uppercase tracking-wider text-stone-300">
+                PFP Core Belief
               </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                500-Guest Catering &amp; Groceries
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Explore our turnkey catering equipment, cooking teams, gas burners, dishing stations, and R15,000 supermarket voucher network.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>Catering Logistics &rarr;</span>
-              <span className="text-stone-500 text-[11px]">Up to 500 people</span>
-            </div>
-          </div>
-
-          {/* Portal 3: Claims & 48-72h Payouts */}
-          <div
-            onClick={() => onSelectTab('claims')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <Clock className="w-6 h-6" />
+              <blockquote className="font-serif text-lg text-white italic font-normal leading-relaxed">
+                &ldquo;We don’t believe in waiting until a family is facing a difficult moment before thinking about what they may need. We believe in planning ahead.&rdquo;
+              </blockquote>
+              <div className="text-[11px] text-stone-400">
+                Because when the unexpected happens, having a plan can make a difficult journey a little easier.
               </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                Claims &amp; 48–72h Payouts
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Interactive document readiness checklist (IDs, Death Certificates, BI-1663), printable family guide, and fast turnaround timeline.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>Claims Guide &rarr;</span>
-              <span className="text-stone-500 text-[11px]">48–72 Hours</span>
-            </div>
-          </div>
-
-          {/* Portal 4: About Us & Heritage */}
-          <div
-            onClick={() => onSelectTab('about')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                About Us &amp; Real Experience
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Learn why PFP was founded from 10+ years of catering insight to relieve families of logistical stress during difficult times.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>Our Story &rarr;</span>
-              <span className="text-stone-500 text-[11px]">Every Detail with Care</span>
-            </div>
-          </div>
-
-          {/* Portal 5: Terms & Benefits */}
-          <div
-            onClick={() => onSelectTab('terms')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <Shield className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                Terms, Governance &amp; POPIA
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Clear, simple, and transparent terms: waiting periods, missed payments, grace periods, exclusions, and complaints channel.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>Policy Terms &rarr;</span>
-              <span className="text-stone-500 text-[11px]">POPIA Compliant</span>
-            </div>
-          </div>
-
-          {/* Portal 6: FAQ & Contact */}
-          <div
-            onClick={() => onSelectTab('faq')}
-            className="smooth-card p-8 space-y-4 cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 group-hover:scale-105 transition-transform">
-                <CheckCircle2 className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-white group-hover:text-gold-300 transition-colors">
-                FAQ &amp; 24/7 Helpline
-              </h3>
-              <p className="text-xs text-stone-400 font-light leading-relaxed">
-                Frequently asked questions on vouchers, catering, claims, debit orders, and direct lines to our Sandton office.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-stone-800 flex items-center justify-between text-xs text-gold-400 font-semibold uppercase tracking-wider">
-              <span>Get Answers &rarr;</span>
-              <span className="text-stone-500 text-[11px]">0800 737 466</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Quote Banner */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="smooth-card p-8 sm:p-12 text-center space-y-4 border-2 border-gold-500/40 shadow-gold-glow">
-          <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient">
-            AT PFP, EVERY DETAIL WITH CARE.
-          </span>
-          <p className="font-serif text-2xl sm:text-3xl text-white italic font-normal leading-relaxed">
-            &ldquo;We believe that families should be able to focus on remembering and honouring their loved one, while having practical support available to help manage some of the responsibilities around them.&rdquo;
+      {/* Package Teaser Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#20232B] pb-6">
+          <div>
+            <span className="text-gold-500 text-xs font-semibold uppercase tracking-widest block">
+              OUR SUPPORT PACKAGES
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl text-white font-normal mt-1">
+              Structured Support for Every Family
+            </h2>
+          </div>
+          <button
+            onClick={() => onSelectTab('packages')}
+            className="btn-secondary-dark px-5 py-2.5 rounded text-xs tracking-wider uppercase self-start sm:self-auto"
+          >
+            View Full Package Details &rarr;
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {SUPPORT_PACKAGES.map((pkg) => (
+            <div
+              key={pkg.id}
+              className="panel-dark p-8 rounded-lg flex flex-col justify-between space-y-6 hover:border-gold-500/50 transition-colors"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-[#20232B] pb-3">
+                  <span className="text-xs font-semibold text-gold-500 uppercase tracking-wider">
+                    {pkg.name}
+                  </span>
+                  <span className="text-xs text-stone-400">
+                    Total Value: <strong className="text-white">R{pkg.totalValue.toLocaleString()}</strong>
+                  </span>
+                </div>
+
+                <div className="font-serif text-2xl text-white font-normal">
+                  {pkg.tagline}
+                </div>
+
+                <p className="text-xs text-stone-300 font-light leading-relaxed">
+                  {pkg.description}
+                </p>
+
+                <div className="bg-[#090A0D] p-4 rounded border border-[#1E2129] space-y-1">
+                  <div className="text-[11px] uppercase tracking-wider text-stone-400">Monthly Premium</div>
+                  <div className="font-serif text-3xl text-gold-400 font-bold">
+                    R{pkg.premiums.age18_64}
+                    <span className="text-xs font-sans font-normal text-stone-400"> / mo (18–64 yrs)</span>
+                  </div>
+                  <div className="text-[11px] text-stone-400">
+                    65–75 yrs: R{pkg.premiums.age65_75} / month
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  onSelectTab('packages');
+                  onOpenQuote(pkg.id);
+                }}
+                className="w-full btn-secondary-dark py-3 rounded text-xs tracking-wider uppercase font-semibold text-center hover:btn-primary-gold hover:border-transparent transition-all"
+              >
+                Select {pkg.name} &rarr;
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Plan Ahead Affirmation */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-8">
+        <div className="panel-dark p-8 sm:p-12 rounded-lg text-center space-y-4 border border-[#242833]">
+          <h3 className="font-serif text-3xl text-white font-normal">
+            Plan ahead. Prepare your family. Let PFP support you when it matters most.
+          </h3>
+          <p className="text-stone-300 text-sm font-light max-w-xl mx-auto">
+            At PFP, our packages are designed to provide practical support that helps families manage some of the financial and logistical responsibilities that come with a funeral.
           </p>
-          <div className="pt-3">
+          <div className="pt-2">
             <button
               onClick={() => onOpenQuote()}
-              className="btn-gold px-8 py-3.5 text-xs tracking-widest uppercase inline-flex items-center gap-2"
+              className="btn-primary-gold px-8 py-3.5 rounded text-xs tracking-wider uppercase font-bold"
             >
-              <span>Join PFP Today</span>
-              <ArrowRight className="w-3.5 h-3.5 text-obsidian-950" />
+              Get Started with PFP Today
             </button>
           </div>
         </div>

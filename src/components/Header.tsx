@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Menu, X, ArrowRight, Shield } from 'lucide-react';
+import { Phone, Menu, X, ArrowRight } from 'lucide-react';
 import { COMPANY_INFO } from '../data/pfpData';
 import { PageTab } from '../types';
 
@@ -10,154 +10,152 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, onOpenQuote }) => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const tabs: { id: PageTab; label: string }[] = [
+  const navTabs: { id: PageTab; label: string }[] = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
-    { id: 'packages', label: 'Support Packages' },
-    { id: 'catering', label: 'Catering & Groceries' },
+    { id: 'packages', label: 'Packages & Pricing' },
+    { id: 'catering', label: '500-Guest Catering' },
+    { id: 'grocery', label: 'Grocery Support' },
     { id: 'claims', label: 'Claims (48–72h)' },
     { id: 'terms', label: 'Terms & Benefits' },
-    { id: 'faq', label: 'FAQ & Contact' },
+    { id: 'contact', label: 'Contact' },
   ];
 
-  const handleTabClick = (tabId: PageTab) => {
-    onSelectTab(tabId);
-    setMobileNavOpen(false);
+  const handleNavClick = (tab: PageTab) => {
+    onSelectTab(tab);
+    setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <>
-      {/* Top Gold & Obsidian Notification Bar */}
-      <div className="bg-[#050507] text-stone-300 text-[11px] tracking-wider py-2.5 border-b border-gold-500/15">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-4">
+      {/* Top Utility Bar */}
+      <div className="bg-[#07080A] text-stone-400 text-xs border-b border-[#1E2028] py-2 px-4 sm:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-gold-400 shadow-gold-glow animate-pulse" />
-            <span className="uppercase font-semibold tracking-widest text-gold-300">
-              South Africa&apos;s Premier Grocery &amp; 500-Guest Catering Funeral Support
+            <span className="text-gold-500 font-semibold uppercase tracking-wider text-[11px]">
+              PREMIUM FUNERAL PLANNING &bull; SOUTH AFRICA
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
-            <span className="hidden md:inline-flex items-center gap-1.5 text-gold-400 font-serif italic">
-              <Shield className="w-3.5 h-3.5 text-gold-500" />
-              Guaranteed 48–72h Payouts
-            </span>
-            <span className="hidden md:inline text-stone-700">|</span>
+          <div className="flex items-center gap-5 text-[11px]">
+            <span className="text-stone-400">Claims Payout: <strong className="text-stone-200">48–72 Hours</strong></span>
+            <span className="text-stone-600">|</span>
             <a
               href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-              className="flex items-center gap-1.5 text-white hover:text-gold-300 transition-colors"
+              className="flex items-center gap-1.5 text-stone-300 hover:text-gold-400 transition-colors"
             >
-              <Phone className="w-3.5 h-3.5 text-gold-500" />
-              <span className="font-semibold">24/7 Helpline: {COMPANY_INFO.phone}</span>
+              <Phone className="w-3 h-3 text-gold-500" />
+              <span>24/7 Bereavement Line: <strong>{COMPANY_INFO.phone}</strong></span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Luxury Masthead Header with Smooth Pill Navigation */}
-      <header className="sticky top-0 z-40 bg-[#0A0B0E]/95 backdrop-blur-md border-b border-gold-500/20 shadow-2xl transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 sm:h-24">
-            {/* PFP Smooth Monogram Brand Mark */}
+      {/* Main Corporate Header */}
+      <header className="sticky top-0 z-40 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#1F222B]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Brand Logo */}
             <button
-              onClick={() => handleTabClick('home')}
-              className="flex items-center gap-3.5 group text-left"
+              onClick={() => handleNavClick('home')}
+              className="flex items-center gap-3.5 text-left group"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-[#1C1D24] to-[#0A0A0C] border-2 border-gold-500/80 rounded-2xl flex items-center justify-center font-serif text-2xl font-bold tracking-tight text-gold-400 shadow-gold-glow group-hover:border-gold-400 transition-all duration-300">
+              <div className="w-10 h-10 bg-[#14161D] border border-gold-500/60 rounded flex items-center justify-center font-serif text-xl font-bold text-gold-500 group-hover:border-gold-400 transition-colors">
                 PFP
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-2xl font-bold tracking-tight text-white leading-none group-hover:text-gold-300 transition-colors">
+                <span className="font-serif text-xl font-bold tracking-tight text-white leading-none">
                   PFP
                 </span>
-                <span className="text-[10px] font-bold tracking-widest-2xl gold-text-gradient uppercase mt-1">
+                <span className="text-[10px] font-semibold tracking-wider text-gold-500 uppercase mt-1">
                   PREMIUM FUNERAL PLANNING
                 </span>
-                <span className="text-[10px] text-gold-400/80 font-serif italic">
+                <span className="text-[10px] text-stone-400 font-serif italic">
                   Every detail with Care.
                 </span>
               </div>
             </button>
 
-            {/* Desktop Smooth Tab Navigation */}
-            <nav className="hidden xl:flex items-center gap-1.5 bg-[#121319]/80 p-1.5 rounded-full border border-gold-500/20">
-              {tabs.map((tab) => {
+            {/* Clean Tab Navigation (Understated, NOT AI pills) */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navTabs.map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => handleTabClick(tab.id)}
-                    className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 rounded-full ${
+                    onClick={() => handleNavClick(tab.id)}
+                    className={`px-3.5 py-2 text-xs font-semibold tracking-wider uppercase transition-colors relative ${
                       isActive
-                        ? 'pill-tab-active'
-                        : 'text-stone-300 hover:text-white hover:bg-white/5'
+                        ? 'text-gold-400'
+                        : 'text-stone-300 hover:text-white'
                     }`}
                   >
-                    {tab.label}
+                    <span>{tab.label}</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-gold-500" />
+                    )}
                   </button>
                 );
               })}
             </nav>
 
-            {/* CTA Action Button */}
+            {/* Action Button */}
             <div className="hidden sm:flex items-center gap-3">
               <button
                 onClick={() => onOpenQuote()}
-                className="btn-gold px-6 py-2.5 text-xs tracking-wider uppercase flex items-center gap-2"
+                className="btn-primary-gold px-5 py-2.5 rounded text-xs tracking-wider uppercase flex items-center gap-2"
               >
                 <span>Get a Plan</span>
-                <ArrowRight className="w-3.5 h-3.5 text-obsidian-950" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* Mobile Nav Toggle */}
-            <div className="flex xl:hidden items-center">
+            {/* Mobile Menu Button */}
+            <div className="flex lg:hidden items-center">
               <button
-                onClick={() => setMobileNavOpen(!mobileNavOpen)}
-                className="p-2.5 rounded-xl bg-white/5 border border-gold-500/20 text-stone-200 hover:text-gold-400"
-                aria-label="Toggle navigation"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-stone-300 hover:text-white"
+                aria-label="Toggle Navigation"
               >
-                {mobileNavOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
-        {mobileNavOpen && (
-          <div className="xl:hidden bg-[#0D0E14] border-b border-gold-500/20 px-6 py-6 space-y-4">
-            <div className="grid grid-cols-1 gap-1.5">
-              {tabs.map((tab) => {
+        {/* Mobile Navigation Dropdown */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-[#0F1116] border-b border-[#20232B] px-6 py-6 space-y-2">
+            <div className="grid grid-cols-1 divide-y divide-[#1D2029]">
+              {navTabs.map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => handleTabClick(tab.id)}
-                    className={`w-full py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider rounded-xl transition-all ${
-                      isActive
-                        ? 'bg-gold-500 text-obsidian-950 font-bold shadow-gold-glow'
-                        : 'text-stone-300 hover:text-white hover:bg-white/5'
+                    onClick={() => handleNavClick(tab.id)}
+                    className={`py-3 text-left text-xs font-semibold uppercase tracking-wider flex items-center justify-between ${
+                      isActive ? 'text-gold-400' : 'text-stone-300 hover:text-white'
                     }`}
                   >
-                    {tab.label}
+                    <span>{tab.label}</span>
+                    {isActive && <span className="text-gold-500 font-bold">&bull;</span>}
                   </button>
                 );
               })}
             </div>
 
-            <div className="pt-2">
+            <div className="pt-4">
               <button
                 onClick={() => {
-                  setMobileNavOpen(false);
+                  setMobileMenuOpen(false);
                   onOpenQuote();
                 }}
-                className="btn-gold w-full py-3.5 rounded-xl text-xs tracking-widest uppercase flex items-center justify-center gap-2"
+                className="btn-primary-gold w-full py-3 rounded text-xs tracking-wider uppercase text-center"
               >
-                <span>Request a Support Plan</span>
-                <ArrowRight className="w-4 h-4 text-obsidian-950" />
+                Request a Support Plan
               </button>
             </div>
           </div>

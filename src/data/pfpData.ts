@@ -1,4 +1,4 @@
-import { SupportPackage, ClaimDocument, FaqItem, ColorTheme } from '../types';
+import { SupportPackage, ClaimDocument, FaqItem } from '../types';
 
 export const COMPANY_INFO = {
   acronym: 'PFP',
@@ -11,6 +11,7 @@ export const COMPANY_INFO = {
   supermarketGroceryValue: 'R15,000',
   cateringCapacity: 'Up to 500 people',
   phone: '0800 737 466',
+  emergencyPhone: '0800 737 466',
   phoneDirect: '+27 11 892 4000',
   whatsapp: '+27 82 555 7437',
   email: 'info@premiumfuneralplanning.co.za',
@@ -189,45 +190,6 @@ export const GROCERY_BASKET_ITEMS = [
   { category: 'Fresh Produce & Vegetables', items: 'Pockets of potatoes, Onions, Butternut, Cabbage, Carrots, Green peppers', share: '11%' },
   { category: 'Beverages & Sugar', items: '10kg White Sugar, 100s Tea bags, Instant Coffee, Rooibos, Powdered soft drinks', share: '6%' },
   { category: 'Sanitation & Disposables', items: 'Dishwashing liquids, Bleach, Heavy-duty refuse bags, Napkins, Hand sanitizers', share: '4%' }
-];
-
-export const COLOR_THEMES: ColorTheme[] = [
-  {
-    id: 'navy',
-    name: 'Midnight Navy & Gold',
-    description: 'The signature PFP brand palette. Represents deep trust, prestige, solemnity, and reassurance.',
-    primaryHex: '#0C1E36',
-    accentHex: '#C59B27',
-    bgHex: '#FAF9F6',
-    badge: 'Signature Default'
-  },
-  {
-    id: 'emerald',
-    name: 'Forest Emerald & Warm Brass',
-    description: 'Deep South African emerald green celebrating family heritage, renewal, and timeless dignity.',
-    primaryHex: '#083324',
-    accentHex: '#C59B27',
-    bgHex: '#F8FAF8',
-    badge: 'Heritage & Life'
-  },
-  {
-    id: 'burgundy',
-    name: 'Regal Burgundy & Champagne',
-    description: 'Warm deep wine with sparkling champagne gold accents, honoring love, memory, and respect.',
-    primaryHex: '#380F1E',
-    accentHex: '#D4AF37',
-    bgHex: '#FAF7F8',
-    badge: 'Warmth & Reverence'
-  },
-  {
-    id: 'charcoal',
-    name: 'Dark Slate & Rose Gold',
-    description: 'Contemporary slate charcoal paired with subtle rose metallic, offering quiet modern elegance.',
-    primaryHex: '#181C24',
-    accentHex: '#C07D63',
-    bgHex: '#F8F9FA',
-    badge: 'Modern Elegance'
-  }
 ];
 
 export const FAQS: FaqItem[] = [

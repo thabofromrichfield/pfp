@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, HeartHandshake, Shield, Award, CheckCircle2 } from 'lucide-react';
+import { HeartHandshake, Shield, Award, CheckCircle2 } from 'lucide-react';
 
 interface AboutPageProps {
   onOpenQuote: (pkgId?: string) => void;
@@ -7,15 +7,12 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuote }) => {
   return (
-    <div className="py-12 sm:py-20 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-12 sm:py-20 space-y-16 max-w-7xl mx-auto px-4 sm:px-8">
       {/* Category Header */}
-      <div className="max-w-4xl space-y-4">
-        <div className="flex items-center gap-2">
-          <span className="h-px w-8 bg-gold-500" />
-          <span className="text-[11px] font-bold tracking-widest-2xl gold-text-gradient uppercase">
-            ABOUT US &bull; OUR STORY &amp; PHILOSOPHY
-          </span>
-        </div>
+      <div className="max-w-4xl space-y-4 border-b border-[#1E2028] pb-10">
+        <span className="text-gold-500 text-xs font-semibold uppercase tracking-widest block">
+          ABOUT US &bull; OUR PURPOSE &amp; PHILOSOPHY
+        </span>
         <h1 className="font-serif text-4xl sm:text-6xl font-normal text-white leading-tight">
           Practical Support Shaped by Over a Decade of Real Experience.
         </h1>
@@ -24,37 +21,33 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuote }) => {
         </p>
       </div>
 
-      {/* Main Narrative Spread in Smooth Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Left Story Column */}
-        <div className="lg:col-span-7 space-y-8">
-          {/* Card: Built From Real Experience */}
-          <div className="smooth-card p-8 sm:p-10 space-y-6">
-            <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
-              OUR FOUNDING ORIGIN
-            </span>
-            <h2 className="font-serif text-3xl font-normal text-white">
+      {/* Main Narrative Split */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Left Column */}
+        <div className="lg:col-span-7 space-y-12">
+          {/* Built From Real Experience */}
+          <div className="space-y-4">
+            <h2 className="font-serif text-3xl text-white font-normal">
               Built From Real Experience
             </h2>
             <div className="space-y-4 text-stone-300 text-sm sm:text-base font-light leading-relaxed">
               <p>
-                Our understanding of the needs of families has been shaped by working hand in hand with experienced catering companies with <strong className="text-gold-300 font-semibold">more than 10 years of experience in the catering industry</strong>.
+                Our understanding of the needs of families has been shaped by working hand in hand with experienced catering companies with <strong className="text-white font-semibold">more than 10 years of experience in the catering industry</strong>.
               </p>
               <p>
-                Through this experience, we have seen how much goes into feeding and accommodating family members and guests during a funeral. From preparing large quantities of food to organising cooking teams, equipment, serving stations and the practical details behind the scenes; <em className="text-gold-300">Catering is a responsibility that families often need help managing.</em>
+                Through this experience, we have seen how much goes into feeding and accommodating family members and guests during a funeral. From preparing large quantities of food to organising cooking teams, equipment, serving stations and the practical details behind the scenes; <em>Catering is a responsibility that families often need help managing.</em>
               </p>
-              <p>
-                We believe that families should be able to focus on remembering and honouring their loved one, while having practical support available to help manage some of the responsibilities around them.
-              </p>
+              <div className="panel-dark p-6 rounded border-l-2 border-gold-500 my-6">
+                <blockquote className="font-serif text-xl text-white italic font-normal leading-relaxed">
+                  &ldquo;We believe that families should be able to focus on remembering and honouring their loved one, while having practical support available to help manage some of the responsibilities around them.&rdquo;
+                </blockquote>
+              </div>
             </div>
           </div>
 
-          {/* Card: What We Do */}
-          <div className="smooth-card p-8 sm:p-10 space-y-6">
-            <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
-              PREPARATION AHEAD OF TIME
-            </span>
-            <h2 className="font-serif text-3xl font-normal text-white">
+          {/* What We Do */}
+          <div className="space-y-4 border-t border-[#1E2028] pt-10">
+            <h2 className="font-serif text-3xl text-white font-normal">
               What We Do
             </h2>
             <div className="space-y-4 text-stone-300 text-sm sm:text-base font-light leading-relaxed">
@@ -67,10 +60,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuote }) => {
               <p>
                 We don’t believe in waiting until a family is facing a difficult moment before thinking about what they may need.
               </p>
-              <p className="font-medium text-white">
+              <p className="font-semibold text-white">
                 We believe in planning ahead.
               </p>
-              <p className="text-gold-400 font-serif italic text-base">
+              <p className="text-gold-400 font-serif italic text-lg">
                 Because when the unexpected happens, having a plan can make a difficult journey a little easier.
               </p>
             </div>
@@ -78,74 +71,67 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuote }) => {
         </div>
 
         {/* Right Column: Our Promise & Pillars */}
-        <div className="lg:col-span-5 space-y-8">
-          {/* Promise Card */}
-          <div className="smooth-card-featured p-8 sm:p-10 space-y-6">
-            <span className="text-[10px] font-bold uppercase tracking-widest-2xl gold-text-gradient block">
-              OUR SACRED PROMISE
-            </span>
-            <h2 className="font-serif text-3xl font-normal text-white">
-              Our Promise
-            </h2>
-            <div className="p-4 rounded-xl bg-[#090A0E] border border-gold-500/30 text-center font-serif text-xl text-gold-300 italic">
+        <div className="lg:col-span-5 space-y-6">
+          <div className="panel-dark p-8 rounded-lg border border-[#242833] space-y-6">
+            <div className="border-b border-[#20232B] pb-4">
+              <span className="text-gold-500 text-xs font-semibold uppercase tracking-widest block">
+                OUR COMMITMENT
+              </span>
+              <h3 className="font-serif text-2xl text-white font-normal mt-1">
+                Our Promise
+              </h3>
+            </div>
+
+            <div className="bg-[#090A0D] p-5 rounded border border-[#20232B] font-serif text-xl text-white italic text-center">
               &ldquo;At PFP, every detail with Care.&rdquo;
             </div>
+
             <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
               We are committed to serving families with compassion, professionalism and respect, while creating practical solutions that help families feel more prepared for tomorrow.
             </p>
+
+            {/* Core Tenets */}
+            <div className="space-y-4 pt-2 text-xs">
+              <div className="border-t border-[#1E2028] pt-3 space-y-1">
+                <div className="font-semibold text-gold-400 flex items-center gap-1.5">
+                  <HeartHandshake className="w-4 h-4" />
+                  <span>Compassion</span>
+                </div>
+                <p className="text-stone-400 font-light leading-relaxed">
+                  Serving families during their most sensitive hours with patience, kindness, and deep empathy.
+                </p>
+              </div>
+
+              <div className="border-t border-[#1E2028] pt-3 space-y-1">
+                <div className="font-semibold text-gold-400 flex items-center gap-1.5">
+                  <Shield className="w-4 h-4" />
+                  <span>Professionalism</span>
+                </div>
+                <p className="text-stone-400 font-light leading-relaxed">
+                  Punctual delivery of cooking teams, immaculate food hygiene standards, and verified supermarket vouchers.
+                </p>
+              </div>
+
+              <div className="border-t border-[#1E2028] pt-3 space-y-1">
+                <div className="font-semibold text-gold-400 flex items-center gap-1.5">
+                  <Award className="w-4 h-4" />
+                  <span>Respect</span>
+                </div>
+                <p className="text-stone-400 font-light leading-relaxed">
+                  Honouring family traditions, mourning rituals, and the sacred memory of your loved one.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => onOpenQuote()}
+                className="btn-primary-gold w-full py-3.5 rounded text-xs tracking-wider uppercase font-bold text-center"
+              >
+                Join PFP / Request Consultation
+              </button>
+            </div>
           </div>
-
-          {/* Three Core Pillars Cards */}
-          <div className="space-y-4">
-            <div className="smooth-card p-6 space-y-2">
-              <div className="font-serif text-lg font-semibold text-gold-300 flex items-center gap-2">
-                <HeartHandshake className="w-5 h-5 text-gold-400" />
-                <span>01. Compassion</span>
-              </div>
-              <p className="text-xs text-stone-300 font-light leading-relaxed">
-                We understand the emotional weight carried by grieving relatives. Our personnel approach every client with patience, kindness, and deep reverence.
-              </p>
-            </div>
-
-            <div className="smooth-card p-6 space-y-2">
-              <div className="font-serif text-lg font-semibold text-gold-300 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-gold-400" />
-                <span>02. Professionalism</span>
-              </div>
-              <p className="text-xs text-stone-300 font-light leading-relaxed">
-                Punctual logistics, immaculate food prep hygiene, verified supermarket vouchers, and prompt claims fulfillment within 48–72 hours.
-              </p>
-            </div>
-
-            <div className="smooth-card p-6 space-y-2">
-              <div className="font-serif text-lg font-semibold text-gold-300 flex items-center gap-2">
-                <Award className="w-5 h-5 text-gold-400" />
-                <span>03. Respect</span>
-              </div>
-              <p className="text-xs text-stone-300 font-light leading-relaxed">
-                Respect for cultural traditions, family dignity, and the sacred act of gathering together to honour the memory of departed loved ones.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Action Footer */}
-      <div className="smooth-card p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-4">
-        <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-          Plan ahead. Prepare your family. Let PFP support you when it matters most.
-        </h3>
-        <p className="text-stone-300 text-xs sm:text-sm font-light max-w-xl mx-auto">
-          Explore our three tailored support packages designed to eliminate the financial and logistical pressure of funeral catering and groceries.
-        </p>
-        <div className="pt-2">
-          <button
-            onClick={() => onOpenQuote()}
-            className="btn-gold px-8 py-3.5 text-xs tracking-widest uppercase inline-flex items-center gap-2"
-          >
-            <span>Request a Consultation</span>
-            <ArrowRight className="w-3.5 h-3.5 text-obsidian-950" />
-          </button>
         </div>
       </div>
     </div>
