@@ -16,42 +16,46 @@
   }
 }
 
-/* Elegant gold accent text (solid, rich, NOT a tacky animated rainbow gradient) */
+/* Light gold tones on the design */
 .text-gold {
-  color: #C5A059;
+  color: #E2C172;
 }
 
 .text-gold-light {
-  color: #E2C785;
+  color: #ECD395;
 }
 
-/* Luxury solid gold button (sharp, elegant, human) */
+.text-gold-bright {
+  color: #F5E5BE;
+}
+
+/* Light gold buttons & borders */
 .btn-primary-gold {
-  background-color: #C5A059;
+  background-color: #E2C172;
   color: #0B0C0E;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .btn-primary-gold:hover {
-  background-color: #D8B46E;
+  background-color: #ECD395;
   color: #000000;
 }
 
 .btn-secondary-dark {
-  background-color: #17181D;
+  background-color: #14161C;
   color: #E2E8F0;
-  border: 1px solid #2A2C35;
+  border: 1px solid #252834;
   transition: all 0.2s ease;
 }
 
 .btn-secondary-dark:hover {
-  background-color: #21232B;
-  border-color: #C5A059;
+  background-color: #1E212B;
+  border-color: #E2C172;
   color: #FFFFFF;
 }
 
-/* Clean, crisp structural panel */
+/* Clean, crisp structural panels */
 .panel-dark {
   background-color: #111317;
   border: 1px solid #20232B;
@@ -70,11 +74,11 @@
   background: #0B0C0E;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2C35;
+  background: #252834;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5A059;
+  background: #E2C172;
 }
 
 @media print {

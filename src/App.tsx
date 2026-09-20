@@ -5,11 +5,7 @@ import { QuoteModal } from './components/QuoteModal';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { PackagesPage } from './pages/PackagesPage';
-import { CateringPage } from './pages/CateringPage';
-import { GroceryPage } from './pages/GroceryPage';
-import { ClaimsPage } from './pages/ClaimsPage';
 import { TermsPage } from './pages/TermsPage';
-import { ContactPage } from './pages/ContactPage';
 import { PageTab, AgeBand } from './types';
 
 export const App: React.FC = () => {
@@ -22,16 +18,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as PageTab;
-      const validTabs: PageTab[] = [
-        'home',
-        'about',
-        'packages',
-        'catering',
-        'grocery',
-        'claims',
-        'terms',
-        'contact',
-      ];
+      const validTabs: PageTab[] = ['home', 'about', 'packages', 'terms'];
       if (validTabs.includes(hash)) {
         setActiveTab(hash);
       }
@@ -55,7 +42,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0C0E] text-[#F1F5F9] antialiased selection:bg-[#C5A059] selection:text-black">
+    <div className="min-h-screen flex flex-col bg-[#0B0C0E] text-[#F1F5F9] antialiased selection:bg-[#E2C172] selection:text-black">
       {/* Editorial Corporate Masthead */}
       <Header
         activeTab={activeTab}
@@ -73,31 +60,15 @@ export const App: React.FC = () => {
         )}
 
         {activeTab === 'about' && (
-          <AboutPage onOpenQuote={handleOpenQuote} />
+          <AboutPage onOpenQuote={() => handleOpenQuote()} />
         )}
 
         {activeTab === 'packages' && (
           <PackagesPage onSelectPackage={handleOpenQuote} />
         )}
 
-        {activeTab === 'catering' && (
-          <CateringPage onOpenQuote={handleOpenQuote} />
-        )}
-
-        {activeTab === 'grocery' && (
-          <GroceryPage onOpenQuote={handleOpenQuote} />
-        )}
-
-        {activeTab === 'claims' && (
-          <ClaimsPage />
-        )}
-
         {activeTab === 'terms' && (
           <TermsPage />
-        )}
-
-        {activeTab === 'contact' && (
-          <ContactPage />
         )}
       </main>
 
@@ -107,7 +78,7 @@ export const App: React.FC = () => {
         onOpenQuote={() => handleOpenQuote()}
       />
 
-      {/* Institutional Policy Schedule Modal */}
+      {/* Institutional Policy Schedule Request Modal */}
       <QuoteModal
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}

@@ -17,11 +17,13 @@ export default {
           600: '#474D5E',
         },
         gold: {
-          300: '#E8D4A2',
-          400: '#D8B46E',
-          500: '#C5A059', // Classic Royal Gold
-          600: '#A38038',
-          700: '#806225',
+          100: '#FAF3E1', // Ultra light gold tint
+          200: '#F5E5BE', // Light champagne gold
+          300: '#ECD395', // Radiant light gold
+          400: '#E2C172', // Refined light gold
+          500: '#D4AF37', // Signature light metallic gold
+          600: '#BFA030', // Deep light gold
+          700: '#9C7F20',
         },
       },
       fontFamily: {

@@ -1,25 +1,13 @@
-import { SupportPackage, ClaimDocument, FaqItem } from '../types';
+import { SupportPackage } from '../types';
 
 export const COMPANY_INFO = {
   acronym: 'PFP',
   fullName: 'PREMIUM FUNERAL PLANNING',
-  promise: 'At PFP, every detail with Care.',
   motto: 'Plan ahead. Prepare your family. Let PFP support you when it matters most.',
+  promise: 'At PFP, every detail with Care.',
+  goal: 'Our goal is to provide families with practical support that helps ease some of the financial and logistical pressure during difficult times. Through our carefully structured support packages, families can receive assistance with groceries, catering and other meaningful benefits, depending on the package they choose.',
+  waitingPeriod: '6-month waiting period for natural death',
   payoutTimeframe: '48–72 hours',
-  waitingPeriodNatural: '6 months',
-  cateringExperience: '10+ years',
-  supermarketGroceryValue: 'R15,000',
-  cateringCapacity: 'Up to 500 people',
-  phone: '0800 737 466',
-  emergencyPhone: '0800 737 466',
-  phoneDirect: '+27 11 892 4000',
-  whatsapp: '+27 82 555 7437',
-  email: 'info@premiumfuneralplanning.co.za',
-  claimsEmail: 'claims@premiumfuneralplanning.co.za',
-  complaintsEmail: 'complaints@premiumfuneralplanning.co.za',
-  address: 'Sandton City Office Tower, 5th Floor, 158 5th St, Sandhurst, Johannesburg, South Africa',
-  hours: '24/7 Claims Assistance | Mon - Fri 08:00 - 17:00 (Administration)',
-  popiaNotice: 'PFP handles personal information in accordance with South Africa\'s Protection of Personal Information Act (POPIA).'
 };
 
 export const SUPPORT_PACKAGES: SupportPackage[] = [
@@ -27,7 +15,7 @@ export const SUPPORT_PACKAGES: SupportPackage[] = [
     id: 'package-1',
     packageNumber: 1,
     name: 'Package 1',
-    tagline: 'GROCERY SUPPORT',
+    tagline: 'Grocery Support',
     headline: 'Grocery Support up to R15,000',
     grocerySupport: 15000,
     totalValue: 15000,
@@ -35,21 +23,14 @@ export const SUPPORT_PACKAGES: SupportPackage[] = [
       age18_64: 295,
       age65_75: 445,
     },
-    description: 'Receive grocery support of up to R15,000 through a voucher redeemable at your nearest supermarket, helping your family purchase essential food and supplies during the funeral period.',
-    features: [
-      'Grocery support voucher of up to R15,000',
-      'Redeemable at nearest leading supermarkets (Shoprite, Checkers, Pick n Pay, Spar)',
-      'Immediate relief for household staples and food supplies',
-      '48–72 hour claim turnaround upon document verification',
-      'Dedicated claims assistance officer',
-      'Transparent underwriting with 6-month natural death waiting period'
-    ]
+    description:
+      'Receive grocery support of up to R15,000 through a voucher redeemable at your nearest supermarket, helping your family purchase essential food and supplies during the funeral period.',
   },
   {
     id: 'package-2',
     packageNumber: 2,
     name: 'Package 2',
-    tagline: 'GROCERY & CASH BENEFIT',
+    tagline: 'Grocery & Cash Benefit',
     headline: 'R15,000 Grocery Support + R10,000 Cash Benefit',
     grocerySupport: 15000,
     cashBenefit: 10000,
@@ -58,24 +39,15 @@ export const SUPPORT_PACKAGES: SupportPackage[] = [
       age18_64: 395,
       age65_75: 545,
     },
-    popular: true,
-    description: 'Receive grocery support of up to R15,000, together with a R10,000 cash benefit paid directly into the client\'s bank account to provide essential financial flexibility during the funeral period.',
-    features: [
-      'Grocery support voucher of up to R15,000',
-      'R10,000 Cash Benefit paid directly into your verified bank account',
-      'Total combined benefit value of R25,000',
-      'Flexible cash assistance for tent hire, transport, electricity or airtime',
-      'Voucher redeemable at major national supermarkets',
-      'Expedited 48–72 hour payout processing',
-      'Full claims guidance and respectful family support'
-    ]
+    description:
+      "Receive grocery support of up to R15,000, together with a R10,000 cash benefit paid directly into the client's bank account to provide essential financial flexibility during the funeral period.",
   },
   {
     id: 'package-3',
     packageNumber: 3,
     name: 'Package 3',
-    tagline: 'GROCERY & CATERING SUPPORT',
-    headline: 'R15,000 Grocery Support + Catering Support for 500 People',
+    tagline: 'Grocery & Catering Support',
+    headline: 'R15,000 Grocery Support + Catering for up to 500 People',
     grocerySupport: 15000,
     cateringGuests: 500,
     totalValue: 30000,
@@ -83,154 +55,183 @@ export const SUPPORT_PACKAGES: SupportPackage[] = [
       age18_64: 445,
       age65_75: 645,
     },
-    highlight: true,
-    description: 'Receive grocery support of up to R15,000, together with professional full-service catering support for up to 500 people. Built from over a decade of catering expertise to lift the heaviest practical burden off your family.',
+    description:
+      'Receive grocery support of up to R15,000, together with catering for up to 500 people with cooking team, serving stations, pots & equipment, gas stoves, utensils, setup & service cleanup.',
     cateringIncludes: [
-      'Professional cooking team',
-      'Dedicated serving stations',
-      'Heavy-duty pots and cooking equipment',
-      'Gas stoves and industrial burners',
-      'Full set of serving utensils and trays',
-      'Complete kitchen setup & post-service clean-up'
+      'Cooking team',
+      'Serving stations',
+      'Pots & equipment',
+      'Gas stoves',
+      'Utensils',
+      'Setup & service cleanup',
     ],
-    features: [
-      'Grocery support voucher of up to R15,000',
-      'Professional catering support for up to 500 people',
-      'Experienced culinary team managing preparation and food execution',
-      'Complete setup with pots, gas stoves, burners and serving stations',
-      'Full post-service clean-up so family can focus on mourning',
-      'Total package value of R30,000',
-      'Backed by partners with 10+ years of catering excellence'
-    ]
-  }
+  },
 ];
 
-export const CATERING_PILLARS = [
-  {
-    title: 'Up to 500 People Capacity',
-    desc: 'Generously provisioned to feed both intimate extended family and the wider community of mourners without shortage.',
-    icon: 'Users'
+export const ABOUT_CONTENT = {
+  goal: 'Our goal is to provide families with practical support that helps ease some of the financial and logistical pressure during difficult times. Through our carefully structured support packages, families can receive assistance with groceries, catering and other meaningful benefits, depending on the package they choose.',
+  builtFromRealExperience: {
+    title: 'Built From Real Experience',
+    paragraph1:
+      'Our understanding of the needs of families has been shaped by working hand in hand with experienced catering companies with more than 10 years of experience in the catering industry.',
+    paragraph2:
+      'Through this experience, we have seen how much goes into feeding and accommodating family members and guests during a funeral. From preparing large quantities of food to organising cooking teams, equipment, serving stations and the practical details behind the scenes; Catering is a responsibility that families often need help managing.',
+    belief:
+      'We believe that families should be able to focus on remembering and honouring their loved one, while having practical support available to help manage some of the responsibilities around them.',
+    planningAhead:
+      'We don’t believe in waiting until a family is facing a difficult moment before thinking about what they may need. Because when the unexpected happens, having a plan makes a difficult journey a little easier.',
   },
-  {
-    title: 'Professional Cooking Team',
-    desc: 'Trained, respectful chefs and kitchen hands who take complete charge of meal preparation and timing on the day.',
-    icon: 'ChefHat'
+  whatWeDo: {
+    title: 'What We Do',
+    paragraph1:
+      'PFP brings together planning, practical support and care to help families prepare ahead of time.',
+    paragraph2:
+      'Our packages are designed to provide meaningful support when it matters most — whether that means assistance with groceries, additional financial support or catering for family and guests.',
   },
-  {
-    title: 'Dedicated Serving Stations',
-    desc: 'Organized, clean buffet stations and dishing points designed to serve large queues quickly and with dignity.',
-    icon: 'Utensils'
+  ourPromise: {
+    title: 'Our Promise',
+    motto: 'At PFP, every detail with Care.',
+    commitment:
+      'We are committed to serving families with compassion, professionalism and respect, while creating practical solutions that help families feel more prepared for tomorrow.',
   },
-  {
-    title: 'Industrial Pots & Cookware',
-    desc: 'Commercial-grade large cast iron and stainless steel pots suited for traditional funeral menus and stews.',
-    icon: 'Flame'
-  },
-  {
-    title: 'Gas Stoves & High-Output Burners',
-    desc: 'Safe, self-contained gas cooking units that operate independently of municipal power outages or load shedding.',
-    icon: 'Sparkles'
-  },
-  {
-    title: 'Complete Setup & Service Clean-Up',
-    desc: 'We arrive early to organize the prep area and stay behind to wash up, pack down, and leave the grounds clean.',
-    icon: 'Sparkle'
-  }
-];
+};
 
-export const CLAIM_DOCUMENTS: ClaimDocument[] = [
-  {
-    id: 'doc-id',
-    name: 'Identification Documents',
-    description: 'Certified copy of the deceased\'s RSA ID and certified copy of the claimant\'s RSA ID.',
-    requiredFor: 'all',
-    iconName: 'CreditCard'
+export const TERMS_CONTENT = {
+  header: {
+    title: 'Payments, Benefits & Terms',
+    subtitle: 'Clear. Simple. Transparent.',
+    intro:
+      'At Premium Funeral Planning, we believe our members should understand exactly how their membership works. From monthly payments to benefit fulfilment and claims, we aim to make the process as clear and straightforward as possible.',
   },
-  {
-    id: 'doc-cert',
-    name: 'Official Death Certificate',
-    description: 'Original or certified copy of the official Home Affairs Death Certificate (DHA-5).',
-    requiredFor: 'all',
-    iconName: 'FileText'
+  monthlyPayment: {
+    title: 'Your Monthly Payment',
+    intro:
+      'Membership is paid through the approved payment method selected when you join PFP. Your monthly premium will depend on:',
+    points: ['Selected package', 'Principal member age', 'Underwriting terms'],
+    notes: [
+      'Your monthly premium will depend on the applicable package, age band and approved terms.',
+      'Premiums are payable according to the payment date and method reflected in your membership/policy documentation.',
+      'Members are responsible for ensuring that sufficient funds are available for their scheduled payment.',
+      'Your confirmed premium and payment details will be reflected in your membership/policy documentation.',
+    ],
   },
-  {
-    id: 'doc-bi1663',
-    name: 'Notification of Death (BI-1663 / DHA-1663)',
-    description: 'Medical certificate issued by the medical practitioner who certified the death.',
-    requiredFor: 'all',
-    iconName: 'ClipboardCheck'
+  benefitFulfilment: {
+    title: 'How Your Benefits Work',
+    intro:
+      'When an eligible insured event occurs and the applicable claim has been accepted in accordance with the relevant policy terms, the selected PFP benefits will be fulfilled according to the package chosen:',
+    table: [
+      {
+        package: 'Package 1 — Grocery Support',
+        benefit:
+          'Up to R15,000 grocery support, provided through a voucher redeemable at the member’s nearest participating supermarket.',
+      },
+      {
+        package: 'Package 2 — Grocery & Cash Benefit',
+        benefit:
+          'Up to R15,000 grocery support, together with a R10,000 cash benefit paid into the client’s account, subject to the applicable approved terms and claim requirements.',
+      },
+      {
+        package: 'Package 3 — Grocery & Catering Support',
+        benefit:
+          'Up to R15,000 grocery support, together with professional catering support for up to 500 people, including the agreed catering services and equipment.',
+      },
+    ],
+    footnote:
+      'Benefits are subject to the applicable waiting periods, eligibility requirements, exclusions, premium status and claims requirements.',
   },
-  {
-    id: 'doc-policy',
-    name: 'Membership / Policy Information',
-    description: 'PFP membership number or initial policy schedule document.',
-    requiredFor: 'all',
-    iconName: 'Shield'
+  claimsAndPayouts: {
+    title: 'Claims & Payouts',
+    payoutNote: 'Payouts are made within 48–72 hours.',
+    intro:
+      'We understand that when a family contacts us after losing a loved one, they need guidance, clarity and support. The family should notify PFP as soon as reasonably possible after the death of an insured person.',
+    docsIntro:
+      'The claimant will be required to complete the applicable claim documentation and provide the supporting documents required for the assessment of the claim. These may include:',
+    requiredDocs: [
+      'Identification documents',
+      'Proof of death',
+      'Membership / policy information',
+      'Banking details (where a cash benefit applies)',
+      'Any other documents required to assess the claim',
+    ],
+    roleNote:
+      'PFP will assist the family with the claims process where this forms part of our agreed role.',
   },
-  {
-    id: 'doc-bank',
-    name: 'Banking Details / Stamped Statement',
-    description: 'Official bank confirmation letter or 3-month statement (required for Package 2 cash benefit).',
-    requiredFor: 'cash',
-    iconName: 'Building'
+  waitingPeriod: {
+    title: 'Waiting Period',
+    points: [
+      'The current PFP proposal provides for a 6-month waiting period for natural death, subject to final underwriting approval and policy wording.',
+      'Any treatment of accidental or unnatural death during the waiting period will be governed by the final approved policy terms.',
+    ],
   },
-  {
-    id: 'doc-police',
-    name: 'Police Report (If Accidental / Unnatural)',
-    description: 'SAPS report and accident report number where death was accidental.',
-    requiredFor: 'all',
-    iconName: 'AlertCircle'
-  }
-];
-
-export const GROCERY_BASKET_ITEMS = [
-  { category: 'Staple Grains & Carbs', items: '50kg Super Maize Meal, 25kg Long Grain Parboiled Rice, 25kg Cake Flour, 10kg Samp, Pasta boxes', share: '32%' },
-  { category: 'Meats & Proteins', items: 'Beef stew cuts, Chicken portions, Boiling fowl, Eggs, Canned pilchards and baked beans', share: '35%' },
-  { category: 'Cooking Essentials & Oils', items: '20L Pure Cooking Oil, Spices, Salt, Stock powders, Tomato paste, Garlic & ginger', share: '12%' },
-  { category: 'Fresh Produce & Vegetables', items: 'Pockets of potatoes, Onions, Butternut, Cabbage, Carrots, Green peppers', share: '11%' },
-  { category: 'Beverages & Sugar', items: '10kg White Sugar, 100s Tea bags, Instant Coffee, Rooibos, Powdered soft drinks', share: '6%' },
-  { category: 'Sanitation & Disposables', items: 'Dishwashing liquids, Bleach, Heavy-duty refuse bags, Napkins, Hand sanitizers', share: '4%' }
-];
-
-export const FAQS: FaqItem[] = [
-  {
-    category: 'packages',
-    question: 'How does the R15,000 grocery support voucher work?',
-    answer: 'Once your claim is validated, PFP issues a digital or physical grocery voucher valued at up to R15,000. This voucher is redeemable at participating national supermarket chains across South Africa (such as Shoprite, Checkers, Pick n Pay, and Spar). It enables your family to procure bulk staples, meats, fresh produce, and drinks directly without paying out of pocket.'
+  missedPayment: {
+    title: 'If Your Payment Is Missed',
+    points: [
+      'Members must keep their premiums up to date.',
+      'Where a payment is not received, the membership may enter the applicable grace period in accordance with the final approved terms.',
+      'If premiums remain unpaid after the applicable grace period, the membership may lapse.',
+      'Reinstatement, where available, may be subject to the applicable rules and could require payment of outstanding premiums and/or other requirements.',
+    ],
   },
-  {
-    category: 'packages',
-    question: 'What is included in the catering support for Package 3?',
-    answer: 'Package 3 provides full-service catering support for up to 500 mourners and attendees. It includes a dedicated professional cooking team, commercial-grade pots and cookware, gas stoves and high-output burners (no dependence on electricity or load shedding), serving stations, dishing utensils, and full setup and post-service clean-up. Our catering partners carry more than 10 years of specialized funeral catering experience.'
+  cancellation: {
+    title: 'Cancellation',
+    points: [
+      'A member may request cancellation in accordance with the applicable membership, administration and policy procedures.',
+      'Any applicable cooling-off period, refund arrangements, cancellation notice requirements and effective date will be governed by the final approved terms and applicable law.',
+    ],
   },
-  {
-    category: 'payments',
-    question: 'How are monthly premiums determined?',
-    answer: 'Premiums are based on the specific package chosen (Package 1, 2, or 3) and the age band of the principal member at entry: 18–64 years (ranging from R295 to R445/month) or 65–75 years (ranging from R445 to R645/month). Premiums are payable through your approved payment method on your chosen scheduled monthly date.'
+  exclusions: {
+    title: 'Important Exclusions',
+    intro:
+      'Benefits are not automatically payable in every circumstance. Claims remain subject to the applicable waiting periods, exclusions, eligibility requirements, premium status, policy conditions and claims documentation requirements.',
+    note: 'Examples of exclusions may include circumstances specifically excluded under the applicable policy terms and conditions.',
   },
-  {
-    category: 'claims',
-    question: 'How fast are claims assessed and paid out?',
-    answer: 'PFP commits to processing and paying eligible claims within 48 to 72 hours following the receipt of all required supporting documentation. For Package 2, cash benefits are transferred directly into the claimant\'s verified bank account; grocery vouchers and catering coordinators are dispatched immediately.'
+  memberResponsibilities: {
+    title: 'Your Responsibilities as a Member',
+    items: [
+      {
+        label: 'Providing accurate information',
+        detail:
+          'All information supplied during application and membership must be complete and accurate.',
+      },
+      {
+        label: 'Keeping payments up to date',
+        detail: 'Ensure that your agreed monthly payment can be collected.',
+      },
+      {
+        label: 'Keeping your information updated',
+        detail:
+          'Notify PFP/administrator of relevant changes to your contact or membership information.',
+      },
+      {
+        label: 'Keeping your documents safe',
+        detail:
+          'Retain your membership/policy documentation and make sure your family knows how to contact PFP if something happens.',
+      },
+      {
+        label: 'Submitting claims promptly',
+        detail:
+          'Provide the required claim information and supporting documents as soon as reasonably possible.',
+      },
+    ],
   },
-  {
-    category: 'compliance',
-    question: 'What is the waiting period for natural and accidental death?',
-    answer: 'Under the PFP proposal, there is a standard 6-month waiting period for natural death from the policy inception date, subject to final underwriting approval and policy terms. Accidental and unnatural deaths are governed by approved policy terms and are typically covered from the first successful premium payment.'
+  companyResponsibilities: {
+    title: 'Our Responsibility to You',
+    points: [
+      'Providing the support included in your selected package.',
+      'Assisting with administration and claims processes within our agreed role.',
+      'Communicating important information to members.',
+      'Working with approved service providers to fulfil applicable PFP services.',
+      'Treating members and their families with professionalism, compassion and respect.',
+    ],
+    footnote:
+      'Where a benefit is subject to an insurer’s assessment, PFP cannot guarantee that a claim will be approved.',
   },
-  {
-    category: 'payments',
-    question: 'What happens if a monthly premium is missed?',
-    answer: 'We understand that unexpected financial circumstances arise. Where a payment is missed, your membership enters an approved grace period. If premiums remain unpaid after the grace period expires, the policy may lapse. Reinstatement may be requested subject to applicable rules and payment of outstanding premiums.'
+  privacy: {
+    title: 'Your Privacy (POPIA)',
+    body: 'We respect the privacy of our members. Personal information may be processed for purposes including membership administration, underwriting, payment administration, claims processing, communication, compliance and the provision of applicable funeral-planning services. PFP will handle personal information in accordance with applicable data-protection requirements, including POPIA where applicable.',
   },
-  {
-    category: 'compliance',
-    question: 'How does PFP protect my privacy and personal data?',
-    answer: 'We respect member confidentiality. All personal and health information collected for underwriting, administration, and claims processing is strictly handled in accordance with the Protection of Personal Information Act (POPIA) and data security regulations.'
+  complaints: {
+    title: 'Complaints',
+    body: 'We want our members to feel heard. If you have a complaint relating to PFP’s services or administration, you may contact PFP through our official complaints channel. Where a complaint relates specifically to the underwriting or assessment of an insurance claim, it will be handled in accordance with the applicable insurer dispute processes.',
   },
-  {
-    category: 'compliance',
-    question: 'How do I lodge a complaint or feedback?',
-    answer: 'PFP has an official complaints channel reachable at complaints@premiumfuneralplanning.co.za or via our toll-free customer line. We investigate all administrative inquiries directly. In matters relating to insurer claim underwriting determinations, formal insurer dispute and ombud resolution channels are provided.'
-  }
-];
+};
