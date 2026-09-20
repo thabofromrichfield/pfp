@@ -1,90 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { QuoteModal } from './components/QuoteModal';
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { PackagesPage } from './pages/PackagesPage';
-import { TermsPage } from './pages/TermsPage';
-import { PageTab, AgeBand } from './types';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<PageTab>('home');
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [selectedQuotePackage, setSelectedQuotePackage] = useState<string>('package-3');
-  const [selectedQuoteAgeBand, setSelectedQuoteAgeBand] = useState<AgeBand>('18-64');
+  const [activeSection, setActiveSection] = useState<string>('top');
 
-  // Sync with URL hash if present
+  // Handle URL hash changes and smooth scrolling
+  const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
+    if (sectionId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', ' ');
+      return;
+    }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState(null, '', `#${sectionId}`);
+    }
+  };
+
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as PageTab;
-      const validTabs: PageTab[] = ['home', 'about', 'packages', 'terms'];
-      if (validTabs.includes(hash)) {
-        setActiveTab(hash);
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          setActiveSection(hash);
+        }
+      }, 100);
+    }
+
+    // Scroll spy to update active section in header
+    const handleScroll = () => {
+      const sections = ['terms', 'packages', 'about'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(section);
+          return;
+        }
       }
+      setActiveSection('top');
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleSelectTab = (tab: PageTab) => {
-    setActiveTab(tab);
-    window.location.hash = tab;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleOpenQuote = (pkgId: string = 'package-3', ageBand: AgeBand = '18-64') => {
-    setSelectedQuotePackage(pkgId);
-    setSelectedQuoteAgeBand(ageBand);
-    setIsQuoteOpen(true);
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0B0C0E] text-[#F1F5F9] antialiased selection:bg-[#E2C172] selection:text-black">
       {/* Editorial Corporate Masthead */}
       <Header
-        activeTab={activeTab}
-        onSelectTab={handleSelectTab}
-        onOpenQuote={() => handleOpenQuote()}
+        activeSection={activeSection}
+        onNavigate={scrollToSection}
       />
 
-      {/* Main Tab Content */}
+      {/* Main Website Flow */}
       <main className="flex-grow">
-        {activeTab === 'home' && (
-          <HomePage
-            onSelectTab={handleSelectTab}
-            onOpenQuote={handleOpenQuote}
-          />
-        )}
-
-        {activeTab === 'about' && (
-          <AboutPage onOpenQuote={() => handleOpenQuote()} />
-        )}
-
-        {activeTab === 'packages' && (
-          <PackagesPage onSelectPackage={handleOpenQuote} />
-        )}
-
-        {activeTab === 'terms' && (
-          <TermsPage />
-        )}
+        <HomePage onNavigate={scrollToSection} />
       </main>
 
       {/* Corporate Structured Footer */}
-      <Footer
-        onSelectTab={handleSelectTab}
-        onOpenQuote={() => handleOpenQuote()}
-      />
-
-      {/* Institutional Policy Schedule Request Modal */}
-      <QuoteModal
-        isOpen={isQuoteOpen}
-        onClose={() => setIsQuoteOpen(false)}
-        initialPackageId={selectedQuotePackage}
-        initialAgeBand={selectedQuoteAgeBand}
-      />
+      <Footer onNavigate={scrollToSection} />
     </div>
   );
 };
