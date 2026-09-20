@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { AboutSection } from './components/AboutSection';
-import { PackagesSection } from './components/PackagesSection';
-import { CateringDeepDive } from './components/CateringDeepDive';
-import { GroceryVoucherSection } from './components/GroceryVoucherSection';
-import { CalculatorSection } from './components/CalculatorSection';
-import { ClaimsChecklistTool } from './components/ClaimsChecklistTool';
-import { TermsAndBenefitsSection } from './components/TermsAndBenefitsSection';
-import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
-import { AgeBand } from './types';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+import { PackagesPage } from './pages/PackagesPage';
+import { CateringPage } from './pages/CateringPage';
+import { ClaimsPage } from './pages/ClaimsPage';
+import { TermsPage } from './pages/TermsPage';
+import { FaqContactPage } from './pages/FaqContactPage';
+import { PageTab, AgeBand } from './types';
 
 export const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<PageTab>('home');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [selectedQuotePackage, setSelectedQuotePackage] = useState<string>('package-3');
   const [selectedQuoteAgeBand, setSelectedQuoteAgeBand] = useState<AgeBand>('18-64');
+
+  // Sync with URL hash if present
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '') as PageTab;
+      const validTabs: PageTab[] = ['home', 'about', 'packages', 'catering', 'claims', 'terms', 'faq'];
+      if (validTabs.includes(hash)) {
+        setActiveTab(hash);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleSelectTab = (tab: PageTab) => {
+    setActiveTab(tab);
+    window.location.hash = tab;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleOpenQuote = (pkgId: string = 'package-3', ageBand: AgeBand = '18-64') => {
     setSelectedQuotePackage(pkgId);
@@ -25,46 +45,55 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#08080A] text-[#F1F5F9] antialiased selection:bg-[#D4AF37] selection:text-black">
-      {/* Navigation Masthead */}
-      <Header onOpenQuote={() => handleOpenQuote()} />
+    <div className="min-h-screen flex flex-col bg-[#070709] text-[#F1F5F9] antialiased selection:bg-[#D4AF37] selection:text-black">
+      {/* Navigation Masthead with Category Tabs */}
+      <Header
+        activeTab={activeTab}
+        onSelectTab={handleSelectTab}
+        onOpenQuote={() => handleOpenQuote()}
+      />
 
-      {/* Main Content Flow */}
+      {/* Main Dynamic Category View */}
       <main className="flex-grow">
-        {/* Dignified Black & Gold Hero Section */}
-        <Hero onOpenQuote={() => handleOpenQuote('package-3')} />
+        {activeTab === 'home' && (
+          <HomePage
+            onSelectTab={handleSelectTab}
+            onOpenQuote={handleOpenQuote}
+          />
+        )}
 
-        {/* About & The 10+ Years Catering Reality */}
-        <AboutSection />
+        {activeTab === 'about' && (
+          <AboutPage onOpenQuote={handleOpenQuote} />
+        )}
 
-        {/* Schedule of Support Packages (1, 2, and 3 with 18-64 & 65-75 pricing) */}
-        <PackagesSection onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
+        {activeTab === 'packages' && (
+          <PackagesPage onSelectPackage={handleOpenQuote} />
+        )}
 
-        {/* Catering Logistics Spotlight for 500 Guests */}
-        <CateringDeepDive onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
+        {activeTab === 'catering' && (
+          <CateringPage onOpenQuote={handleOpenQuote} />
+        )}
 
-        {/* Supermarket Grocery Voucher (Up to R15,000) */}
-        <GroceryVoucherSection onSelectPackage={(pkgId) => handleOpenQuote(pkgId)} />
+        {activeTab === 'claims' && (
+          <ClaimsPage />
+        )}
 
-        {/* Transparent Premium & Benefit Calculator */}
-        <CalculatorSection
-          onApplyPlan={(pkgId, ageBand) => handleOpenQuote(pkgId, ageBand)}
-        />
+        {activeTab === 'terms' && (
+          <TermsPage />
+        )}
 
-        {/* Claims Readiness Guide & 48-72h Payout Protocol */}
-        <ClaimsChecklistTool />
-
-        {/* Comprehensive Policy Terms, Governance & Disclosures */}
-        <TermsAndBenefitsSection />
-
-        {/* Frequently Asked Questions */}
-        <FaqSection />
+        {activeTab === 'faq' && (
+          <FaqContactPage />
+        )}
       </main>
 
-      {/* Footer & Statutory Disclosures */}
-      <Footer onOpenQuote={() => handleOpenQuote()} />
+      {/* Structured Category Footer */}
+      <Footer
+        onSelectTab={handleSelectTab}
+        onOpenQuote={() => handleOpenQuote()}
+      />
 
-      {/* Membership Schedule Request Modal */}
+      {/* Membership Application / Schedule Request Modal */}
       <QuoteModal
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}

@@ -1,3 +1,5 @@
+export type PageTab = 'home' | 'about' | 'packages' | 'catering' | 'claims' | 'terms' | 'faq';
+
 export interface SupportPackage {
   id: 'package-1' | 'package-2' | 'package-3';
   packageNumber: 1 | 2 | 3;

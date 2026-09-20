@@ -1,20 +1,27 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { COMPANY_INFO, SUPPORT_PACKAGES } from '../data/pfpData';
+import { PageTab } from '../types';
 
 interface FooterProps {
+  onSelectTab: (tab: PageTab) => void;
   onOpenQuote: (pkgId?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenQuote }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleTabNavigate = (tab: PageTab) => {
+    onSelectTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-[#060608] text-white border-t border-gold-500/20">
+    <footer className="bg-[#050507] text-white border-t border-gold-500/20">
       {/* Top Banner Statement */}
-      <div className="border-b border-stone-800 py-16 sm:py-20 bg-radial-gold-glow">
+      <div className="border-b border-stone-800/80 py-16 sm:py-20 bg-radial-gold-glow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8 space-y-3">
@@ -32,13 +39,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
               <button
                 onClick={() => onOpenQuote()}
-                className="btn-gold px-8 py-4 rounded-sm text-xs tracking-widest-xl uppercase text-center"
+                className="btn-gold px-8 py-4 text-xs tracking-widest-xl uppercase text-center"
               >
                 Request a Support Plan
               </button>
               <a
                 href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-                className="px-8 py-3.5 bg-[#121318] hover:bg-[#1A1C23] text-gold-300 font-semibold text-xs tracking-widest-xl uppercase text-center border border-gold-500/30 transition-colors"
+                className="px-8 py-3.5 rounded-full bg-[#121318] hover:bg-[#1A1C23] text-gold-300 font-semibold text-xs tracking-widest-xl uppercase text-center border border-gold-500/30 transition-colors"
               >
                 24/7 Helpline: {COMPANY_INFO.phone}
               </a>
@@ -54,9 +61,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
             {/* Brand Column */}
             <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 border-2 border-gold-500 bg-black flex items-center justify-center font-serif text-xl font-bold text-gold-400 shadow-gold-glow">
+                <button
+                  onClick={() => handleTabNavigate('home')}
+                  className="w-11 h-11 border-2 border-gold-500 rounded-2xl bg-black flex items-center justify-center font-serif text-xl font-bold text-gold-400 shadow-gold-glow"
+                >
                   PFP
-                </div>
+                </button>
                 <div>
                   <div className="font-serif text-xl font-bold text-white leading-none">
                     PFP
@@ -88,7 +98,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
                 {SUPPORT_PACKAGES.map((pkg) => (
                   <li key={pkg.id}>
                     <button
-                      onClick={() => onOpenQuote(pkg.id)}
+                      onClick={() => {
+                        handleTabNavigate('packages');
+                        onOpenQuote(pkg.id);
+                      }}
                       className="hover:text-gold-300 transition-colors text-left"
                     >
                       <span className="text-stone-200">{pkg.name}: {pkg.tagline}</span>
@@ -99,14 +112,20 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
                   </li>
                 ))}
                 <li className="pt-2">
-                  <a href="#catering" className="text-gold-400 hover:underline">
+                  <button
+                    onClick={() => handleTabNavigate('catering')}
+                    className="text-gold-400 hover:underline"
+                  >
                     500-Person Catering Full Details &rarr;
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#grocery" className="text-gold-400 hover:underline">
+                  <button
+                    onClick={() => handleTabNavigate('catering')}
+                    className="text-gold-400 hover:underline"
+                  >
                     R15,000 Supermarket Voucher Guide &rarr;
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -117,13 +136,41 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
                 Policy Governance
               </span>
               <ul className="space-y-2.5 text-xs text-stone-400 font-light">
-                <li><a href="#claims" className="hover:text-gold-300 transition-colors">Claims &amp; 48–72h Payouts</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">6-Month Natural Death Waiting Period</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Missed Payments &amp; Grace Period</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Cancellation &amp; Statutory Cooling-off</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Member vs PFP Responsibilities</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">POPIA Privacy &amp; Data Rights</a></li>
-                <li><a href="#terms" className="hover:text-gold-300 transition-colors">Official Complaints Channel</a></li>
+                <li>
+                  <button onClick={() => handleTabNavigate('claims')} className="hover:text-gold-300 transition-colors">
+                    Claims &amp; 48–72h Payouts
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    6-Month Natural Death Waiting Period
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    Missed Payments &amp; Grace Period
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    Cancellation &amp; Statutory Cooling-off
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    Member vs PFP Responsibilities
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    POPIA Privacy &amp; Data Rights
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                    Official Complaints Channel
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -134,13 +181,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
               </span>
               <button
                 onClick={scrollToTop}
-                className="px-4 py-2 bg-[#121318] hover:bg-[#1A1C23] border border-gold-500/30 text-xs text-gold-300 flex items-center justify-between w-full transition-colors rounded-sm"
+                className="px-4 py-2.5 bg-[#121318] hover:bg-[#1A1C23] border border-gold-500/30 text-xs text-gold-300 flex items-center justify-between w-full transition-colors rounded-full"
               >
                 <span>Return to Top</span>
                 <ArrowUp className="w-3.5 h-3.5 text-gold-400" />
               </button>
 
-              <div className="p-3 bg-[#121318] border border-gold-500/20 text-[11px] text-stone-400 font-light">
+              <div className="p-4 bg-[#121318] rounded-2xl border border-gold-500/20 text-[11px] text-stone-400 font-light">
                 <div className="text-gold-300 font-medium mb-1">POPIA Protection</div>
                 Handled in accordance with South Africa&apos;s Protection of Personal Information Act.
               </div>
@@ -150,7 +197,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
       </div>
 
       {/* Statutory Footer Disclosures */}
-      <div className="bg-[#030304] border-t border-stone-800 py-8">
+      <div className="bg-[#030304] border-t border-stone-800/80 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 text-stone-500 text-[11px] leading-relaxed font-light">
           <p>
             <strong>Underwriting &amp; Regulatory Notice:</strong> Premium Funeral Planning (PFP) brings together advance planning, supermarket grocery vouchers, and professional funeral catering services. Membership benefits are subject to the applicable waiting periods, eligibility requirements, exclusions, premium status, and claims documentation requirements. The current PFP proposal provides for a 6-month waiting period for natural death, subject to final underwriting approval and policy wording. Where a benefit is subject to an insurer&apos;s assessment, PFP cannot guarantee that a claim will be approved.
@@ -160,11 +207,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
               &copy; {new Date().getFullYear()} PFP &bull; PREMIUM FUNERAL PLANNING. All Rights Reserved. Every detail with Care.
             </div>
             <div className="flex items-center gap-4 text-stone-400">
-              <a href="#terms" className="hover:text-gold-400">Policy Terms</a>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-400">Policy Terms</button>
               <span>&bull;</span>
-              <a href="#terms" className="hover:text-gold-400">POPIA Privacy</a>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-400">POPIA Privacy</button>
               <span>&bull;</span>
-              <a href="#terms" className="hover:text-gold-400">Complaints</a>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-400">Complaints</button>
             </div>
           </div>
         </div>
