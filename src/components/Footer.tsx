@@ -1,12 +1,19 @@
 import React from 'react';
-import { EVERY_DETAIL_WITH_CARE, SUPPORT_PACKAGES } from '../data/pfpData';
+import { PageTab } from '../types';
+import { EVERY_DETAIL_WITH_CARE, SUPPORT_PACKAGES, ABOUT_US } from '../data/pfpData';
 
 interface FooterProps {
-  onNavigate: (sectionId: string) => void;
+  onSelectTab: (tab: PageTab) => void;
+  onOpenQuote: (pkgId?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenQuote }) => {
   const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleTabNavigate = (tab: PageTab) => {
+    onSelectTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -30,10 +37,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
               <button
-                onClick={() => onNavigate('packages')}
+                onClick={() => onOpenQuote()}
                 className="px-6 py-3.5 rounded bg-gold-400 hover:bg-gold-300 text-[#0B0C0E] text-xs font-semibold uppercase tracking-wider text-center transition-colors shadow-sm"
               >
-                View Support Packages
+                Request a Support Plan
               </button>
             </div>
           </div>
@@ -45,10 +52,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
             {/* Brand Column */}
-            <div className="lg:col-span-5 space-y-4">
+            <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center gap-3">
                 <button
-                  onClick={scrollToTop}
+                  onClick={() => handleTabNavigate('home')}
                   className="w-10 h-10 border border-gold-400/80 rounded bg-[#12141C] flex items-center justify-center font-serif text-lg font-bold text-gold-300"
                 >
                   PFP
@@ -64,20 +71,28 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </div>
 
               <p className="text-xs text-stone-300 font-light leading-relaxed max-w-md">
-                Our understanding of the needs of families has been shaped by working hand in hand with experienced catering companies with more than 10 years of experience in the catering industry.
+                {ABOUT_US.builtFromRealExperience.paragraph1}
               </p>
+
+              <div className="text-xs text-stone-400 space-y-1 pt-2 font-light">
+                <div>Claims turnaround: between 48-72 hours once verified.</div>
+                <div>Standard 6-month natural death waiting period.</div>
+              </div>
             </div>
 
             {/* Support Packages */}
             <div className="lg:col-span-4 space-y-3">
               <span className="text-gold-300 text-[11px] font-semibold uppercase tracking-wider block">
-                OUR SUPPORT PACKAGES
+                Support Packages
               </span>
               <ul className="space-y-2 text-xs text-stone-300 font-light">
                 {SUPPORT_PACKAGES.map((pkg) => (
                   <li key={pkg.id}>
                     <button
-                      onClick={() => onNavigate('packages')}
+                      onClick={() => {
+                        handleTabNavigate('packages');
+                        onOpenQuote(pkg.id);
+                      }}
                       className="hover:text-gold-300 transition-colors text-left"
                     >
                       <span className="text-white font-medium">{pkg.name}: {pkg.tagline}</span>
@@ -87,27 +102,48 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     </button>
                   </li>
                 ))}
+                <li className="pt-2">
+                  <button
+                    onClick={() => handleTabNavigate('catering')}
+                    className="text-gold-300 hover:underline block"
+                  >
+                    500-Person Catering Full Details &rarr;
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleTabNavigate('grocery')}
+                    className="text-gold-300 hover:underline block"
+                  >
+                    R15,000 Supermarket Voucher Relief &rarr;
+                  </button>
+                </li>
               </ul>
             </div>
 
             {/* Navigation & Governance */}
-            <div className="lg:col-span-3 space-y-3">
+            <div className="lg:col-span-4 space-y-3">
               <span className="text-gold-300 text-[11px] font-semibold uppercase tracking-wider block">
-                NAVIGATION
+                Navigation &amp; Governance
               </span>
               <ul className="space-y-2 text-xs text-stone-300 font-light">
                 <li>
-                  <button onClick={() => onNavigate('about')} className="hover:text-gold-300 transition-colors">
+                  <button onClick={() => handleTabNavigate('about')} className="hover:text-gold-300 transition-colors">
                     About Us
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('packages')} className="hover:text-gold-300 transition-colors">
+                  <button onClick={() => handleTabNavigate('packages')} className="hover:text-gold-300 transition-colors">
                     Our Support Packages
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('terms')} className="hover:text-gold-300 transition-colors">
+                  <button onClick={() => handleTabNavigate('claims')} className="hover:text-gold-300 transition-colors">
+                    Claims &amp; Payouts (48–72h)
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300 transition-colors">
                     Payments, Benefits &amp; Terms
                   </button>
                 </li>
@@ -136,11 +172,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               &copy; {new Date().getFullYear()} PFP &bull; PREMIUM FUNERAL PLANNING. All Rights Reserved. At PFP, every detail with Care.
             </div>
             <div className="flex items-center gap-4 text-stone-400">
-              <button onClick={() => onNavigate('terms')} className="hover:text-gold-300">Payments &amp; Terms</button>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300">Payments &amp; Terms</button>
               <span>&bull;</span>
-              <button onClick={() => onNavigate('terms')} className="hover:text-gold-300">Privacy (POPIA)</button>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300">Privacy (POPIA)</button>
               <span>&bull;</span>
-              <button onClick={() => onNavigate('terms')} className="hover:text-gold-300">Complaints</button>
+              <button onClick={() => handleTabNavigate('terms')} className="hover:text-gold-300">Complaints</button>
             </div>
           </div>
         </div>

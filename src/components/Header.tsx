@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
+import { PageTab } from '../types';
 
 interface HeaderProps {
-  activeSection: string;
-  onNavigate: (sectionId: string) => void;
+  activeTab: PageTab;
+  onSelectTab: (tab: PageTab) => void;
+  onOpenQuote: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => {
+export const Header: React.FC<HeaderProps> = ({
+  activeTab,
+  onSelectTab,
+  onOpenQuote,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
+  const navItems: { id: PageTab; label: string }[] = [
+    { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
-    { id: 'packages', label: 'Our Support Packages' },
-    { id: 'terms', label: 'Payments, Benefits & Terms' },
+    { id: 'packages', label: 'Support Packages' },
+    { id: 'catering', label: '500-Guest Catering' },
+    { id: 'grocery', label: 'Grocery Support' },
+    { id: 'claims', label: 'Claims (48–72h)' },
+    { id: 'terms', label: 'Payments & Terms' },
   ];
 
-  const handleNavClick = (id: string) => {
-    onNavigate(id);
+  const handleNavClick = (tab: PageTab) => {
+    onSelectTab(tab);
     setMobileMenuOpen(false);
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#20232B]">
-      {/* Top Banner */}
+    <header className="sticky top-0 z-40 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#20232B]">
+      {/* Top Promise Strip */}
       <div className="bg-[#07080A] border-b border-[#181A22] py-2 px-4 sm:px-8 text-center">
         <span className="text-[11px] font-medium tracking-widest uppercase text-gold-300">
           At PFP, every detail with Care.
@@ -33,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
         <div className="flex items-center justify-between h-20">
           {/* Brand */}
           <button
-            onClick={() => handleNavClick('top')}
+            onClick={() => handleNavClick('home')}
             className="flex items-center gap-3.5 text-left group"
           >
             <div className="w-10 h-10 rounded border border-gold-400/80 bg-[#12141C] flex items-center justify-center font-serif text-lg font-bold text-gold-300 transition-colors group-hover:border-gold-300">
@@ -50,14 +60,14 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
           </button>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = activeSection === item.id;
+              const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all relative ${
+                  className={`px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition-all relative whitespace-nowrap ${
                     isActive
                       ? 'text-gold-300 font-bold'
                       : 'text-stone-300 hover:text-white'
@@ -65,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
                 >
                   {item.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-gold-400" />
+                    <span className="absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-gold-400" />
                   )}
                 </button>
               );
@@ -75,18 +85,18 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
           {/* Action Button */}
           <div className="hidden sm:flex items-center gap-4">
             <button
-              onClick={() => handleNavClick('packages')}
-              className="px-5 py-2.5 rounded bg-gold-400 hover:bg-gold-300 text-[#0B0C0E] text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
+              onClick={onOpenQuote}
+              className="px-5 py-2.5 rounded bg-gold-400 hover:bg-gold-300 text-[#0B0C0E] text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm font-sans"
             >
-              View Packages
+              Request a Plan
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile / Tablet Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-stone-300 hover:text-white"
-            aria-label="Toggle Menu"
+            className="xl:hidden p-2 text-stone-300 hover:text-white"
+            aria-label="Toggle Navigation Menu"
           >
             <div className="w-6 h-5 flex flex-col justify-between">
               <span className={`h-0.5 w-full bg-gold-400 transition-transform ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -99,9 +109,9 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0E1015] border-b border-[#222530] px-4 py-4 space-y-2">
+        <div className="xl:hidden bg-[#0E1015] border-b border-[#222530] px-4 py-4 space-y-1">
           {navItems.map((item) => {
-            const isActive = activeSection === item.id;
+            const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
@@ -116,6 +126,17 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => 
               </button>
             );
           })}
+          <div className="pt-3">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenQuote();
+              }}
+              className="w-full py-3 rounded bg-gold-400 text-[#0B0C0E] text-xs font-semibold uppercase tracking-wider text-center"
+            >
+              Request a Plan
+            </button>
+          </div>
         </div>
       )}
     </header>
