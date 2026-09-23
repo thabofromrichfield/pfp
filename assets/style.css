@@ -128,8 +128,9 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
 .hero-wordmark{margin-top:12px;display:flex;flex-direction:column;gap:2px}
 .hero-wordmark span:first-child{font-size:18px;letter-spacing:0.58em;font-weight:700;color:var(--black);font-family:'Inter',sans-serif}
 .hero-wordmark span:nth-child(2){font-size:12px;letter-spacing:0.38em;font-weight:600;color:var(--text-muted);font-family:'Inter',sans-serif;margin-top:4px}
-.hero-line{margin-top:18px;width:200px;height:1px;background:var(--gold-gradient-2);position:relative;display:flex;align-items:center;justify-content:center}
-.hero-line .diamond{position:absolute;background:var(--cream);padding:0 10px;color:var(--gold);font-size:12px;transform:rotate(0)}
+.hero-line{margin-top:18px;width:200px;display:flex;align-items:center;gap:10px}
+.hero-line:before,.hero-line:after{content:'';flex:1;height:1px;background:#B89551}
+.hero-line .diamond{flex:none;width:8px;height:8px;background:#B89551;transform:rotate(45deg)}
 .hero-content h1{
   font-size:42px;line-height:1.15;font-weight:400;
   color:var(--black);margin:28px 0 18px;
