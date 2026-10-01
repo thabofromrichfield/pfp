@@ -1,0 +1,23 @@
+{
+  "name": "PFP Premium Funeral Planning",
+  "short_name": "PFP",
+  "description": "PFP Premium Funeral Planning: funeral support packages across South Africa with groceries, a cash benefit or catering for up to 500 people. From R295 a month.",
+  "lang": "en-ZA",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#FFFBF7",
+  "theme_color": "#0E0E0E",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
