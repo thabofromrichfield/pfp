@@ -314,7 +314,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
 
 /* FOOTER */
 .footer{background:var(--black);color:rgba(255,255,255,0.7);padding:64px 0 28px;border-top:1px solid rgba(200,161,90,0.15)}
-.footer-top{display:grid;grid-template-columns:1.4fr 0.6fr 0.6fr 0.8fr;gap:36px;padding-bottom:42px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.footer-top{display:grid;grid-template-columns:1.2fr 0.55fr 0.55fr 1fr;gap:36px;padding-bottom:42px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;letter-spacing:-0.05em;color:#fff;display:flex;gap:2px}
 .footer-logo .gold{color:var(--gold)}
 .footer-word{margin:10px 0 14px;display:flex;flex-direction:column}
@@ -359,4 +359,101 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
   .hero-inner{padding:56px 20px}
   .hero-actions{flex-direction:column}
   .btn{width:100%}
+}
+
+/* ==========================================================
+   CONTACT DETAILS - phone (call / WhatsApp chooser) + email
+   ========================================================== */
+.ic{width:18px;height:18px;flex:none;display:block}
+
+/* Nav: phone beside the CTA (desktop + tablet) */
+.nav-links .nav-phone{display:inline-flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em;font-size:13.5px;font-weight:500;color:var(--text);white-space:nowrap}
+.nav-links .nav-phone:after{display:none}
+.np-ic{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-gold);background:rgba(200,161,90,.1);color:var(--gold-dark);display:inline-flex;align-items:center;justify-content:center;transition:.25s}
+.np-ic .ic{width:16px;height:16px}
+.nav-links .nav-phone:hover .np-ic{background:var(--gold);border-color:var(--gold);color:var(--black)}
+/* Nav: icon-only button for phones */
+.nav-call-m{display:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-gold);background:rgba(200,161,90,.1);color:var(--gold-dark);align-items:center;justify-content:center;margin-left:auto;margin-right:8px}
+.nav-call-m .ic{width:18px;height:18px}
+
+/* Contact card: direct phone + email rows */
+.contact-direct{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.cd-row{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:14px;border:1px solid var(--line);background:#fff;text-decoration:none;color:var(--text);transition:all .25s}
+.cd-row:hover{border-color:var(--gold);box-shadow:0 8px 24px rgba(200,161,90,.16);transform:translateY(-1px)}
+.cd-ic{width:36px;height:36px;border-radius:50%;background:var(--black);color:var(--gold-light);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.cd-ic .ic{width:16px;height:16px}
+.cd-text{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.cd-text small{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);font-weight:600}
+.cd-text strong{font-size:14px;font-weight:600;color:var(--black);margin-top:2px;overflow-wrap:anywhere}
+.cd-email .cd-text strong{font-size:12.5px}
+.cd-arrow{margin-left:auto;width:16px;height:16px;color:var(--gold-dark);transition:transform .25s}
+.cd-row:hover .cd-arrow{transform:translateX(3px)}
+
+/* Footer: phone + email */
+.fc-link{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:13px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:color .2s;overflow-wrap:anywhere}
+.fc-link .ic{width:16px;height:16px;color:var(--gold)}
+.fc-link:hover{color:var(--gold-light)}
+
+/* Callback form: honeypot, sending / sent states, status message */
+.hp-field{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.contact-form .btn:disabled{opacity:.75;cursor:progress;transform:none}
+.contact-form .btn.is-sent{background:var(--black);color:#fff;box-shadow:none;border-color:var(--black);filter:none}
+.form-status{margin-top:6px;padding:14px 16px;border-radius:12px;font-size:13px;line-height:1.55;color:var(--text);background:#fff;border:1px solid var(--line-gold)}
+.form-status[hidden]{display:none}
+.form-status strong{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px;color:var(--black)}
+.form-status.ok{background:linear-gradient(180deg,#FFFDF8,#FBF3E2);border-color:rgba(200,161,90,.55)}
+.form-status.ok strong{color:var(--gold-dark)}
+.form-status.err{background:#FFF8F5;border-color:#E8CFC4}
+.fs-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.fs-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-decoration:none;border:1px solid var(--black);color:var(--black);background:transparent;transition:.25s}
+.fs-btn:hover{background:var(--black);color:#fff}
+.fs-btn .ic{width:15px;height:15px}
+.fs-btn.wa .ic{color:#1FA855}
+.fs-or{margin-top:10px;font-size:12px;color:var(--text-muted)}
+.fs-or a{color:var(--gold-dark);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line-gold)}
+.select-flash{animation:selFlash 1.5s ease}
+@keyframes selFlash{0%,100%{box-shadow:0 0 0 0 rgba(200,161,90,0)}25%,65%{box-shadow:0 0 0 5px rgba(200,161,90,.35);border-color:var(--gold)}}
+
+/* Call / WhatsApp chooser */
+.cc-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(14,14,14,.58);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:ccFade .25s ease both}
+.cc-overlay[hidden]{display:none}
+.cc-card{position:relative;width:100%;max-width:400px;background:var(--cream);border:1px solid var(--line-gold);border-radius:var(--radius-lg);padding:34px 28px 22px;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,.35);animation:ccRise .35s cubic-bezier(.2,.8,.2,1) both;outline:none}
+.cc-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border:0;background:transparent;font-size:26px;line-height:1;color:var(--text-muted);cursor:pointer;border-radius:50%;transition:.2s}
+.cc-close:hover{background:rgba(0,0,0,.06);color:var(--black)}
+.cc-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:600;letter-spacing:.01em;margin:16px 0 6px;color:var(--black)}
+.cc-sub{font-size:13.5px;color:var(--text-muted);margin-bottom:22px}
+.cc-actions{display:flex;flex-direction:column;gap:10px}
+.cc-btn{display:flex;align-items:center;gap:14px;padding:14px 20px;border-radius:16px;text-decoration:none;text-align:left;border:1px solid transparent;transition:all .25s}
+.cc-btn .ic{width:24px;height:24px}
+.cc-btn span{display:flex;flex-direction:column;line-height:1.25}
+.cc-btn strong{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.cc-btn small{font-size:12px;opacity:.75;margin-top:2px}
+.cc-call{background:var(--black);color:#fff}
+.cc-call .ic{color:var(--gold-light)}
+.cc-call:hover{transform:translateY(-2px);background:var(--black-2)}
+.cc-wa{background:#fff;color:var(--black);border-color:var(--line-gold)}
+.cc-wa .ic{color:#1FA855}
+.cc-wa:hover{transform:translateY(-2px);border-color:#1FA855;box-shadow:0 12px 30px rgba(31,168,85,.18)}
+.cc-copy{margin-top:14px;background:none;border:0;font-family:inherit;font-size:12px;letter-spacing:.06em;color:var(--text-muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 10px}
+.cc-copy:hover{color:var(--gold-dark)}
+body.cc-lock{overflow:hidden}
+@keyframes ccFade{from{opacity:0}to{opacity:1}}
+@keyframes ccRise{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes ccSheet{from{transform:translateY(100%)}to{transform:none}}
+
+@media(max-width:1000px){
+  .nav-links .nav-phone .np-num{display:none}
+}
+@media(max-width:768px){
+  .nav-call-m{display:inline-flex}
+}
+@media(max-width:520px){
+  .cd-arrow{display:none}
+}
+@media(max-width:520px){
+  .cc-overlay{align-items:flex-end;padding:0}
+  .cc-card{max-width:none;border-radius:26px 26px 0 0;padding-bottom:30px;animation-name:ccSheet}
+}
+@media (prefers-reduced-motion:reduce){
+  .cc-overlay,.cc-card,.select-flash{animation:none!important}
 }
