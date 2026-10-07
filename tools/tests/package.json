@@ -1,0 +1,18 @@
+{
+  "name": "pfp-site-tests",
+  "private": true,
+  "type": "module",
+  "description": "Developer-only tests for the PFP website. Not part of the website package that gets uploaded.",
+  "scripts": {
+    "setup": "node inflate-libs.mjs",
+    "test:php": "node php-mailer.test.mjs",
+    "test:browser": "node form-e2e.test.mjs",
+    "test:layout": "node layout.test.mjs"
+  },
+  "dependencies": {
+    "@php-wasm/node": "3.1.57",
+    "@php-wasm/universal": "3.1.57",
+    "@sparticuz/chromium": "153.0.0",
+    "puppeteer-core": "25.12.0"
+  }
+}

@@ -12,7 +12,7 @@ const PFP = {
   //   2) endpoint - FormSubmit, only used if the mailer can't be reached or can't send
   mailer: 'send-enquiry.php',
   endpoint: 'https://formsubmit.co/ajax/inquires@premiumfuneralplanning.co.za',
-  waitMailer: 10000,            // ms to wait for each route before moving on
+  waitMailer: 14000,            // ms to wait for each route before moving on
   waitBackup: 8000,
   waGreeting: "Hello PFP, I'd like to find out more about your Premium Funeral Planning packages."
 };
@@ -327,7 +327,9 @@ function initCallbackForm(){
       ok = backup.ok && (backup.body.success === true || backup.body.success === 'true');
     }
     if(!ok){
-      try { console.warn('[PFP] callback request could not be sent', {mailer: own.status || own.error, backup: backup ? (backup.status || backup.error) : 'not tried'}); } catch(_){}
+      // one plain line for support: what each route answered (visitors never see this)
+      const why = (r)=> !r ? 'not tried' : [r.status || r.error || '?', r.body && r.body.code, r.body && (r.body.detail || r.body.message)].filter(Boolean).join(' - ');
+      try { console.warn('[PFP] could not send. Mailer: ' + why(own) + ' | Backup: ' + why(backup)); } catch(_){}
     }
 
     busy = false;
