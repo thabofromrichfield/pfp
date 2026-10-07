@@ -7,8 +7,13 @@ const PFP = {
   phoneWa: '27656111247',       // WhatsApp  -> https://wa.me/27656111247
   phoneCopy: '065 611 1247',    // what "Copy number" puts on the clipboard
   email: 'inquires@premiumfuneralplanning.co.za',
-  // Every callback request from the website is emailed to PFP.email (via FormSubmit).
+  // Every callback request from the website is emailed to PFP.email, by two routes tried in order:
+  //   1) mailer   - the site's own mailer (send-enquiry.php, uploaded next to index.html)
+  //   2) endpoint - FormSubmit, only used if the mailer can't be reached or can't send
+  mailer: 'send-enquiry.php',
   endpoint: 'https://formsubmit.co/ajax/inquires@premiumfuneralplanning.co.za',
+  waitMailer: 10000,            // ms to wait for each route before moving on
+  waitBackup: 8000,
   waGreeting: "Hello PFP, I'd like to find out more about your Premium Funeral Planning packages."
 };
 
@@ -186,10 +191,12 @@ function initPackagePicker(){
 
 /* ------------------------------------------------------------------
    Request a Callback -> emailed to PFP.email.
-   Success is read from the response BODY (FormSubmit answers 200 with
+   Route 1: the site's own mailer (send-enquiry.php) - answers in about a second.
+   Route 2: FormSubmit, only if route 1 can't be reached or can't send.
+   Success is read from the reply BODY (FormSubmit answers 200 with
    success:"false" until its one-time activation link has been clicked),
-   so a request is never reported as sent unless it really was.
-   If sending fails the visitor gets WhatsApp / email buttons that
+   so a request is never reported as sent unless a route confirmed it.
+   If both routes fail the visitor gets WhatsApp / email buttons that
    already contain their details, so no enquiry is lost.
    ------------------------------------------------------------------ */
 function initCallbackForm(){
@@ -202,6 +209,24 @@ function initCallbackForm(){
   let busy = false;
 
   const val = (name) => (form.elements[name].value || '').trim();
+
+  // POST with a hard time limit. Never throws: always resolves to {ok, status, body, error?}.
+  function post(url, init, ms){
+    return new Promise((resolve)=>{
+      let done = false, timer;
+      const ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+      const finish = (r)=>{ if(done) return; done = true; clearTimeout(timer); resolve(r); };
+      timer = setTimeout(()=>{
+        if(ctrl){ try { ctrl.abort(); } catch(_){} }
+        finish({ok:false, status:0, body:{}, error:'timeout'});
+      }, ms);
+      try {
+        fetch(url, Object.assign({method:'POST'}, init, ctrl ? {signal: ctrl.signal} : {}))
+          .then((res)=> res.json().catch(()=>({})).then((body)=> finish({ok:res.ok, status:res.status, body: body || {}})))
+          .catch(()=> finish({ok:false, status:0, body:{}, error:'network'}));
+      } catch(_){ finish({ok:false, status:0, body:{}, error:'network'}); }
+    });
+  }
 
   function setStatus(type, html){
     status.className = 'form-status ' + type;
@@ -280,21 +305,30 @@ function initCallbackForm(){
     btn.textContent = 'Sending\u2026';
     clearStatus();
 
-    let ok = false;
-    try {
-      const ctrl = new AbortController();
-      const timer = setTimeout(()=> ctrl.abort(), 20000);
-      const res = await fetch(PFP.endpoint, {
-        method:'POST',
-        headers:{'Content-Type':'application/json', 'Accept':'application/json'},
-        body: JSON.stringify(payload),
-        signal: ctrl.signal
-      });
-      clearTimeout(timer);
-      let body = {};
-      try { body = await res.json(); } catch(_){}
-      ok = res.ok && (body.success === true || body.success === 'true');
-    } catch(_){ ok = false; }
+    // route 1: the site's own mailer
+    const own = await post(PFP.mailer, {
+      headers: {'Accept':'application/json'},
+      body: new URLSearchParams({
+        name: data['Full Name'], phone: data['Phone Number'], package: data['Package'],
+        age: data['Age Band'], page: payload['Page'], _honey: ''
+      })
+    }, PFP.waitMailer);
+    let ok = own.ok && own.body.ok === true;
+
+    // route 2: FormSubmit - whenever the mailer isn't there or couldn't send. Not when it was
+    // reached and refused the request itself (bad details / too large / too many requests).
+    const mailerSaidNo = typeof own.body.ok === 'boolean' && [400, 413, 422, 429].indexOf(own.status) !== -1;
+    let backup = null;
+    if(!ok && !mailerSaidNo){
+      backup = await post(PFP.endpoint, {
+        headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+        body: JSON.stringify(payload)
+      }, PFP.waitBackup);
+      ok = backup.ok && (backup.body.success === true || backup.body.success === 'true');
+    }
+    if(!ok){
+      try { console.warn('[PFP] callback request could not be sent', {mailer: own.status || own.error, backup: backup ? (backup.status || backup.error) : 'not tried'}); } catch(_){}
+    }
 
     busy = false;
     btn.disabled = false;
