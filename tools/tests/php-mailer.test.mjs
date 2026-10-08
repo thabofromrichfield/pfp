@@ -16,18 +16,52 @@ fs.mkdirSync(OUT, { recursive: true });
 // ---- stand-ins loaded in front of the real script -------------------------------------------
 const STUBS = String.raw`<?php
 namespace PFP {
-    // stand-in for the server's mail(): records the call, then behaves as the test asks
+    // Stand-in for the server's mail(). It writes down EXACTLY what PHP itself would pipe to sendmail
+    // (php-src ext/standard/mail.c: php_mail), including the X-PHP-Originating-Script header cPanel hosts switch on,
+    // and applies PHP's own "malformed newlines" refusal. Then it behaves as the test asks.
+    function php_detect_multiple_crlf($hdr) {
+        if ($hdr === '') { return false; }
+        $c = ord($hdr[0]);
+        if ($c < 33 || $c > 126 || $hdr[0] === ':') { return true; }
+        $n = strlen($hdr); $i = 0;
+        while ($i < $n) {
+            $ch = $hdr[$i];
+            $n1 = ($i + 1 < $n) ? $hdr[$i + 1] : "\0";
+            $n2 = ($i + 2 < $n) ? $hdr[$i + 2] : "\0";
+            if ($ch === "\r") {
+                if ($n1 === "\0" || $n1 === "\r" || ($n1 === "\n" && ($n2 === "\0" || $n2 === "\n" || $n2 === "\r"))) { return true; }
+                $i += 2;
+            } elseif ($ch === "\n") {
+                if ($n1 === "\0" || $n1 === "\r" || $n1 === "\n") { return true; }
+                $i += 2;
+            } else { $i++; }
+        }
+        return false;
+    }
     function mail($to, $subject, $message, $headers = '', $params = '') {
+        $headers = rtrim((string) $headers);
+        $mixed = ini_get('mail.mixed_lf_and_crlf');
+        $sep = (PHP_VERSION_ID >= 80000 && !($mixed !== false && in_array(strtolower(trim((string) $mixed)), array('1', 'on', 'true', 'yes'), true))) ? "\r\n" : "\n";
+        $hdr = 'X-PHP-Originating-Script: 1697:send-enquiry.php' . ($headers !== '' ? $sep . $headers : '');
+        $malformed = php_detect_multiple_crlf($hdr);
+        $stdin = 'To: ' . $to . $sep . 'Subject: ' . $subject . $sep . $hdr . $sep . $sep . $message . $sep;
         $f = '/tmp/mail-calls.json';
         $calls = is_file($f) ? json_decode(file_get_contents($f), true) : array();
-        $calls[] = array('to' => $to, 'subject' => $subject, 'message' => $message, 'headers' => $headers, 'params' => $params);
+        $calls[] = array('to' => $to, 'subject' => $subject, 'message' => $message, 'headers' => $headers, 'params' => $params, 'stdin' => $stdin, 'sep' => $sep, 'malformed' => $malformed);
         file_put_contents($f, json_encode($calls));
+        if ($malformed) { return false; }
         $mode = is_file('/tmp/mail-mode') ? trim(file_get_contents('/tmp/mail-mode')) : 'ok';
         if ($mode === 'throw') { throw new \RuntimeException('boom from mail in /home/u/public_html/x.php'); }
         if ($mode === 'fatal') { ini_set('memory_limit', '4M'); $boom = str_repeat('x', 64 * 1024 * 1024); }   // a real out-of-memory crash
         if ($mode === 'fail-all') { return false; }
         if ($mode === 'fail-first' && $params !== '') { return false; }
         return true;
+    }
+
+    // lets a test pretend the server's php.ini sets mail.mixed_lf_and_crlf (a startup-only setting, so it cannot be flipped at run time)
+    function ini_get($name) {
+        if ($name === 'mail.mixed_lf_and_crlf' && is_file('/tmp/ini-mixed.txt')) { return trim(file_get_contents('/tmp/ini-mixed.txt')); }
+        return \ini_get($name);
     }
 
     function smtp_cfg() { return json_decode(is_file('/tmp/fake-smtp.json') ? file_get_contents('/tmp/fake-smtp.json') : '{}', true); }
@@ -138,6 +172,30 @@ require __DIR__ . '/send-enquiry.php';
 echo json_encode((function () { return include '/tmp/unit-code.php'; })());
 `;
 
+// Reads what PHP piped to sendmail the way Exim did on the live server (see the bounce): lines end at the FIRST line's
+// ending; a line break of the other kind inside a line is an "embedded newline", which Exim repairs by folding it into a
+// continuation line (newline + space). That is how one giant From: header appeared.
+function eximView(stdin) {
+  const firstLF = stdin.indexOf('\n');
+  const term = (firstLF > 0 && stdin[firstLF - 1] === '\r') ? '\r\n' : '\n';
+  const end = stdin.indexOf(term + term);
+  const head = stdin.slice(0, end);
+  const body = stdin.slice(end + 2 * term.length);
+  const rawLines = head.split(term);
+  const mixedHeaders = rawLines.some((l) => /[\r\n]/.test(l));
+  const mixedBody = body.split(term).some((l) => /[\r\n]/.test(l));
+  const lines = rawLines.map((l) => l.replace(/\n(?![ \t])/g, '\n '));
+  const flat = [];
+  for (const l of lines.join('\n').split('\n')) flat.push(l);
+  const headers = []; let continuation = 0;
+  for (const l of flat) {
+    if (/^[ \t]/.test(l)) { continuation++; if (headers.length) headers[headers.length - 1].value += ' ' + l.trim(); continue; }
+    const i = l.indexOf(':');
+    headers.push({ name: l.slice(0, i), value: l.slice(i + 1).trim() });
+  }
+  return { term, mixedHeaders, mixedBody, continuation, headers, get: (n) => (headers.find((h) => h.name.toLowerCase() === n.toLowerCase()) || {}).value };
+}
+
 const R = recorder();
 const manifest = [];
 const form = (o) => new URLSearchParams(o).toString();
@@ -156,11 +214,12 @@ for (const v of versions) {
   const sh = async (code) => (await php.run({ code: '<?php ' + code })).text;
   const check = (label, cond, detail = '') => R.check(`[PHP ${v}] ${label}`, cond, detail);
   const reset = async (mode = 'ok') => {
-    await sh('foreach ((array)glob("/tmp/pfp_rl_*") as $f) @unlink($f); foreach (array("/tmp/mail-calls.json","/tmp/smtp-log.txt","/tmp/fake-smtp.json","/home/u/pfp-mail-password.txt","/home/u/public_html/pfp-mail-password.txt") as $f) @unlink($f); file_put_contents("/tmp/mail-mode", ' + JSON.stringify(mode) + ');');
+    await sh('foreach ((array)glob("/tmp/pfp_rl_*") as $f) @unlink($f); foreach (array("/tmp/mail-calls.json","/tmp/smtp-log.txt","/tmp/fake-smtp.json","/tmp/ini-mixed.txt","/home/u/pfp-mail-password.txt","/home/u/public_html/pfp-mail-password.txt") as $f) @unlink($f); file_put_contents("/tmp/mail-mode", ' + JSON.stringify(mode) + '); file_put_contents("/tmp/fake-smtp.json", json_encode(array("refuse_ports" => array(25))));');
   };
   const mails = async () => JSON.parse((await sh('echo is_file("/tmp/mail-calls.json") ? file_get_contents("/tmp/mail-calls.json") : "[]";')) || '[]');
   const smtpLog = async () => await sh('echo is_file("/tmp/smtp-log.txt") ? file_get_contents("/tmp/smtp-log.txt") : "";');
-  const setSmtp = (cfg) => php.writeFile('/tmp/fake-smtp.json', JSON.stringify(cfg));
+  // by default the pretend server refuses local port 25 (the last-resort step), so older tests keep their meaning; {local:true} opens it
+  const setSmtp = (cfg, o = {}) => php.writeFile('/tmp/fake-smtp.json', JSON.stringify(Object.assign({}, cfg, { refuse_ports: (cfg.refuse_ports || []).concat(o.local ? [] : [25]) })));
   const setPassword = (content, where = '/home/u/pfp-mail-password.txt') => php.writeFile(where, content);
   const unit = async (code) => {
     php.writeFile('/tmp/unit-code.php', '<?php ' + code);
@@ -229,6 +288,18 @@ for (const v of versions) {
       check('subject has no line breaks', !/[\r\n]/.test(ms[0].subject), JSON.stringify(ms[0].subject));
       check('subject text', ms[0].subject === 'New callback request: Package 2 - Lesego Mokoena', ms[0].subject);
     }
+    if (ms[0]) {
+      const view = eximView(ms[0].stdin);
+      const expectTerm = (v === '7.4') ? '\n' : '\r\n';
+      check('what PHP pipes to sendmail uses ONE kind of line ending in the headers and the body', !view.mixedHeaders && !view.mixedBody, JSON.stringify(ms[0].stdin.slice(0, 400)));
+      check(`...and it is the kind PHP itself uses on this version (${expectTerm === '\r\n' ? 'CRLF' : 'LF'})`, view.term === expectTerm && ms[0].sep === expectTerm, JSON.stringify(view.term));
+      check('PHP does not refuse the header block as malformed', ms[0].malformed === false);
+      check('read the way Exim does: no header is folded into another (no continuation lines)', view.continuation === 0, JSON.stringify(view.headers));
+      check('...the headers are To, Subject, X-PHP-Originating-Script, From, MIME-Version, Content-Type, Content-Transfer-Encoding, in that order', view.headers.map((h) => h.name).join(',') === 'To,Subject,X-PHP-Originating-Script,From,MIME-Version,Content-Type,Content-Transfer-Encoding', view.headers.map((h) => h.name).join(','));
+      check('...From is exactly the bare mailbox address (what the live host demanded)', view.get('From') === MAILBOX, JSON.stringify(view.get('From')));
+      check('...MIME headers are intact', view.get('MIME-Version') === '1.0' && view.get('Content-Type') === 'text/plain; charset=UTF-8' && view.get('Content-Transfer-Encoding') === 'quoted-printable', JSON.stringify(view.headers));
+    }
+    check('mail() worked, so the mail server was never contacted directly', (await smtpLog()) === '', await smtpLog());
     await saveMail('ok-form', { subject: 'New callback request: Package 2 - Lesego Mokoena', has: ['Name:      Lesego Mokoena', 'Phone:     065 611 1247', 'Package:   Package 2 - Grocery & Cash - R395', 'Age band:  18-64 years', 'Page:      ' + PROD_ORIGIN + '/', 'https://wa.me/27656111247', '(SA time)'], hasNot: [] });
   }
   await reset();
@@ -288,7 +359,7 @@ for (const v of versions) {
     check('CRLF in name still sends (cleaned)', r.status === 200 && ms.length === 1, `got ${r.status}`);
     if (ms[0]) {
       check('no raw CR/LF in subject', !/[\r\n]/.test(ms[0].subject), JSON.stringify(ms[0].subject));
-      check('no Bcc header created', !/^Bcc:/im.test(ms[0].headers) && ms[0].headers.split('\n').length === 5, JSON.stringify(ms[0].headers));
+      check('no Bcc header created, and still exactly 4 extra headers', !/^Bcc:/im.test(ms[0].headers) && ms[0].headers.split(ms[0].sep).length === 4, JSON.stringify(ms[0].headers));
     } }
   await reset();
   { await call({ fields: { phone: '0656111247\r\nBcc: evil@example.com' } }); const ms = await mails();
@@ -301,6 +372,16 @@ for (const v of versions) {
       check('control characters replaced by a space', ms[0].subject === 'New callback request: Package 2 - Ann Marie', JSON.stringify(ms[0].subject));
     } }
 
+  // ---- 5b. we always follow whatever line ending PHP itself uses on the server ----------------
+  for (const [setting, expectTerm, label] of [['1', '\n', 'mail.mixed_lf_and_crlf=1 (host switched PHP back to LF)'], ['0', (v === '7.4') ? '\n' : '\r\n', 'mail.mixed_lf_and_crlf=0']]) {
+    await reset();
+    php.writeFile('/tmp/ini-mixed.txt', setting);
+    const r = await call(); const m = (await mails())[0];
+    if (!m) { check(`${label}: an email was handed over`, false, `got ${r.status}`); continue; }
+    const view = eximView(m.stdin);
+    check(`${label} -> ${expectTerm === '\n' ? 'LF' : 'CRLF'} throughout, nothing folded, From intact`, r.status === 200 && m.sep === expectTerm && view.term === expectTerm && !view.mixedHeaders && !view.mixedBody && view.continuation === 0 && view.get('From') === MAILBOX, JSON.stringify([r.status, m.sep, view.term, view.mixedHeaders, view.continuation, view.get('From')]));
+  }
+
   // ---- 6. names from any language survive intact -----------------------------------------------
   await reset();
   { const r = await call({ fields: { name: 'Zoë Ndlovu', package: 'Package 3 - Grocery & Catering - R445', age: '65-75 years' } });
@@ -312,9 +393,10 @@ for (const v of versions) {
     check('80-char non-ASCII name -> 200', r.status === 200, `got ${r.status}`);
     const m = (await mails())[0];
     if (m) {
-      const words = m.subject.split('\r\n ');
-      check('each encoded word <= 75 chars', words.every((w) => w.length <= 75), words.map((w) => w.length).join(','));
-      check('only CRLF+space folds in subject', !/(?<!\r)\n|\r(?!\n )/.test(m.subject));
+      const words = m.subject.split(' ');
+      check('each encoded word <= 75 chars', words.filter((w) => w.startsWith('=?')).every((w) => w.length <= 75), words.map((w) => w.length).join(','));
+      check('the subject has no line breaks at all (so no line-ending question can arise)', !/[\r\n]/.test(m.subject));
+      check('PHP does not refuse it, and Exim sees one clean Subject header', m.malformed === false && eximView(m.stdin).get('Subject') === m.subject && eximView(m.stdin).continuation === 0);
     }
     await saveMail('long-non-ascii', { subject: 'New callback request: Package 2 - ' + long, has: ['Name:      ' + long], hasNot: [] }); }
   await reset();
@@ -372,7 +454,7 @@ for (const v of versions) {
     const msg = await saveSmtp('smtp-465', EXPECT);
     if (msg) {
       check('message uses CRLF line endings only', !/(^|[^\r])\n/.test(msg), JSON.stringify(msg.slice(0, 200)));
-      check('message has Date, Message-ID, From, To, Subject headers', /^Date: .+\r\nMessage-ID: <[0-9a-f]+@premiumfuneralplanning\.co\.za>\r\nFrom: PFP Website <inquires@premiumfuneralplanning\.co\.za>\r\nTo: inquires@premiumfuneralplanning\.co\.za\r\nSubject: New callback request: Package 2 - Lesego Mokoena\r\n/.test(msg), msg.slice(0, 400));
+      check('message has Date, Message-ID, From (bare address), To, Subject headers', /^Date: .+\r\nMessage-ID: <[0-9a-f]+@premiumfuneralplanning\.co\.za>\r\nFrom: inquires@premiumfuneralplanning\.co\.za\r\nTo: inquires@premiumfuneralplanning\.co\.za\r\nSubject: New callback request: Package 2 - Lesego Mokoena\r\n/.test(msg), msg.slice(0, 400));
     } }
 
   // 9b. wrong password -> falls back to mail()
@@ -463,6 +545,27 @@ for (const v of versions) {
   { const r = await call(); const log = await smtpLog();
     check('optional user=/host=/port= lines are honoured (587, custom user)', r.status === 200 && r.json.via === 'smtp' && /CONNECT tcp:\/\/localhost:587/.test(log) && /MAIL FROM:<other@premiumfuneralplanning\.co\.za>/.test(log), `got ${r.status} ${r.text.slice(0, 200)}\n${log}`); }
 
+  // 9g. last resort: mail() failed -> the server's own mail service, which explains any refusal
+  await reset('fail-all');
+  setSmtp({}, { local: true });
+  { const r = await call(); const log = await smtpLog();
+    check('mail() refused but the local mail service accepts -> sent (via smtp-local)', r.status === 200 && r.json && r.json.via === 'smtp-local', `got ${r.status} ${r.text.slice(0, 300)}\n${log}`);
+    check('...it connected to localhost:25, with no login and no encryption step', /CONNECT tcp:\/\/localhost:25/.test(log) && !/AUTH|STARTTLS/.test(log), log);
+    check('...envelope is the mailbox', log.includes(`C: MAIL FROM:<${MAILBOX}>`) && log.includes(`C: RCPT TO:<${MAILBOX}>`), log);
+    await saveSmtp('smtp-local', EXPECT); }
+  await reset('fail-all');
+  setSmtp({ data_reply: '550 Email Rejected, Invalid From Address -\r\n' }, { local: true });
+  { const r = await call();
+    check("mail() refused AND the host's rule rejects the message -> 500 whose reason quotes the host's own words", r.status === 500 && r.json && r.json.code === 'send_failed' && /mail\(\) was refused/.test(r.json.detail) && /local mail server: port 25: message failed \(550 Email Rejected, Invalid From Address -\)/.test(r.json.detail), `got ${r.status} ${r.text.slice(0, 500)}`); }
+  await reset('fail-all');
+  { const r = await call();
+    check('mail() refused and local port 25 closed -> reason says so', r.json && /local mail server: port 25: could not connect \(Connection refused\)/.test(r.json.detail), r.text); }
+  await reset('fail-all');
+  setPassword('wrong');
+  setSmtp({ expect_user: MAILBOX, expect_pass: 'right' }, { local: true });
+  { const r = await call(); const log = await smtpLog();
+    check('login refused + mail() refused + local mail service accepts -> still sent', r.status === 200 && r.json.via === 'smtp-local' && /AUTH-RESULT rejected/.test(log), `got ${r.status} ${r.text.slice(0, 300)}`); }
+
   // ---- 10. unit tests of internals -------------------------------------------------------------
   await reset();
   setSmtp({});
@@ -516,7 +619,7 @@ bad = 0; n = 0
 for item in json.load(open('${OUT}/manifest.json')):
     m = json.load(open(item['file']))
     if m['kind'] == 'mail':
-        raw = 'To: ' + m['to'] + '\\n' + 'Subject: ' + m['subject'] + '\\n' + m['headers'] + '\\n\\n' + m['message']
+        raw = m['stdin']
     else:
         raw = m['message']
     msg = email.message_from_string(raw, policy=email.policy.default)
@@ -528,7 +631,8 @@ for item in json.load(open('${OUT}/manifest.json')):
         if not cond:
             bad += 1; print('  FAIL', tag, what)
     ok(str(msg['subject']) == item['subject'], 'subject %r != %r' % (str(msg['subject']), item['subject']))
-    ok('${MAILBOX}' in str(msg['from']) and 'PFP Website' in str(msg['from']), 'from header %r' % msg['from'])
+    ok(str(msg['from']) == '${MAILBOX}', 'from header is exactly the bare mailbox, got %r' % msg['from'])
+    ok(msg['mime-version'] == '1.0', 'mime-version header %r' % msg['mime-version'])
     ok(str(msg['to']) == '${MAILBOX}', 'to header')
     ok(msg['bcc'] is None and msg['cc'] is None, 'no bcc/cc')
     ok(msg.get_content_charset() == 'utf-8', 'charset')

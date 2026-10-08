@@ -8,10 +8,12 @@
  *
  * How it sends, in order:
  *   1. With the mailbox's own login - only if you have created the password
- *      file described below.
- *   2. With the server's built-in mail() function.
- * If both fail it says exactly why. The website writes that reason to the
- * browser console (visitors never see it) so the problem can be fixed fast.
+ *      file described below (normally NOT needed).
+ *   2. With the server's built-in mail() function (the normal way).
+ *   3. Only if 2 failed: straight to this server's own mail service. PHP's
+ *      mail() never says why it failed; the mail service does, in its own words.
+ * If everything fails it says exactly why. The website writes that reason to
+ * the browser console (visitors never see it) so the problem can be fixed fast.
  *
  *   - Keep this file next to index.html (the web root of the site).
  *   - To change where enquiries go, edit TO and FROM below.
@@ -145,7 +147,7 @@ function whatsapp_number($digits)
     return '';
 }
 
-/** Email header text: plain ASCII as is, anything else as RFC 2047 encoded words. */
+/** Email header text: plain ASCII as is, anything else as RFC 2047 encoded words (joined by a plain space, never a line break). */
 function mime_header($text)
 {
     if (!preg_match('/[^\x20-\x7E]/', $text)) {
@@ -170,7 +172,25 @@ function mime_header($text)
     foreach ($words as $i => $w) {
         $words[$i] = '=?UTF-8?B?' . base64_encode($w) . '?=';
     }
-    return implode("\r\n ", $words);
+    return implode(' ', $words);
+}
+
+/**
+ * The line break PHP's own mail() puts after "To:" and "Subject:" on THIS server. Our extra headers must use
+ * the very same one: mixing the two makes Exim fold every header after the first into it (one giant
+ * "From:"), and hosts then reject the message as having an invalid sender. PHP 8.0+ uses CRLF unless the
+ * mail.mixed_lf_and_crlf setting is on; PHP 7 uses LF.
+ */
+function mail_line_break()
+{
+    if (PHP_VERSION_ID < 80000) {
+        return "\n";
+    }
+    $mixed = ini_get('mail.mixed_lf_and_crlf'); // false on builds that do not have the setting
+    if ($mixed !== false && in_array(strtolower(trim((string) $mixed)), array('1', 'on', 'true', 'yes'), true)) {
+        return "\n";
+    }
+    return "\r\n";
 }
 
 // ---- the mailbox's own login (optional) -------------------------------------
@@ -296,8 +316,9 @@ function smtp_try($login, $port, $from, $message, $deadline, &$why)
         if (smtp_say($fp, 'EHLO ' . $name, $t, $deadline) !== 250) {
             break;
         }
-        $caps = strtoupper($t);
-        if (!$implicit && strpos($caps, 'STARTTLS') !== false) {
+        $caps      = strtoupper($t);
+        $needLogin = ($login['pass'] !== '');
+        if ($needLogin && !$implicit && strpos($caps, 'STARTTLS') !== false) {
             $step = 'encryption';
             if (smtp_say($fp, 'STARTTLS', $t, $deadline) !== 220) {
                 break;
@@ -311,30 +332,32 @@ function smtp_try($login, $port, $from, $message, $deadline, &$why)
                 break;
             }
             $caps = strtoupper($t);
-        } elseif (!$implicit && !$local) {
+        } elseif ($needLogin && !$implicit && !$local) {
             $step = 'encryption';
             $t    = 'the server does not offer encryption, so the password was not sent';
             break;
         }
         $step = 'login';
-        if (strpos($caps, 'AUTH') !== false) {
-            if (preg_match('/AUTH[ =][^\r\n]*\bPLAIN\b/', $caps)) {
-                $code = smtp_say($fp, 'AUTH PLAIN ' . base64_encode("\0" . $login['user'] . "\0" . $login['pass']), $t, $deadline);
-            } else {
-                $code = smtp_say($fp, 'AUTH LOGIN', $t, $deadline);
-                if ($code === 334) {
-                    $code = smtp_say($fp, base64_encode($login['user']), $t, $deadline);
+        if ($needLogin) {
+            if (strpos($caps, 'AUTH') !== false) {
+                if (preg_match('/AUTH[ =][^\r\n]*\bPLAIN\b/', $caps)) {
+                    $code = smtp_say($fp, 'AUTH PLAIN ' . base64_encode("\0" . $login['user'] . "\0" . $login['pass']), $t, $deadline);
+                } else {
+                    $code = smtp_say($fp, 'AUTH LOGIN', $t, $deadline);
+                    if ($code === 334) {
+                        $code = smtp_say($fp, base64_encode($login['user']), $t, $deadline);
+                    }
+                    if ($code === 334) {
+                        $code = smtp_say($fp, base64_encode($login['pass']), $t, $deadline);
+                    }
                 }
-                if ($code === 334) {
-                    $code = smtp_say($fp, base64_encode($login['pass']), $t, $deadline);
+                if ($code !== 235) {
+                    break;
                 }
-            }
-            if ($code !== 235) {
+            } elseif (!$local) {
+                $t = 'the server does not offer a login';
                 break;
             }
-        } elseif (!$local) {
-            $t = 'the server does not offer a login';
-            break;
         }
         $step = 'sender';
         if (smtp_say($fp, 'MAIL FROM:<' . $from . '>', $t, $deadline) !== 250) {
@@ -372,13 +395,12 @@ function smtp_deliver($login, $subject, $qpBody, &$why)
     $message = implode("\r\n", array(
         'Date: ' . date('r'),
         'Message-ID: <' . md5(uniqid('', true)) . '@' . substr((string) strrchr(FROM, '@'), 1) . '>',
-        'From: PFP Website <' . FROM . '>',
+        'From: ' . FROM,
         'To: ' . TO,
         'Subject: ' . $subject,
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8',
         'Content-Transfer-Encoding: quoted-printable',
-        'X-Mailer: PFP website form',
     )) . "\r\n\r\n" . str_replace("\n", "\r\n", str_replace("\r\n", "\n", $qpBody));
     $message = (string) preg_replace('/^\./m', '..', $message); // SMTP "dot-stuffing"
     if (substr($message, -2) !== "\r\n") {
@@ -402,7 +424,7 @@ function smtp_deliver($login, $subject, $qpBody, &$why)
     return false;
 }
 
-/** Tries each way of sending in turn. Returns 'smtp' or 'mail' on success, '' on failure ($trail says why). */
+/** Tries each way of sending in turn. Returns 'smtp', 'mail' or 'smtp-local' on success, '' on failure ($trail says why). */
 function deliver($subject, $qpBody, &$trail)
 {
     $trail = array();
@@ -418,30 +440,39 @@ function deliver($subject, $qpBody, &$trail)
         $trail[] = $note;
     }
 
-    if (!function_exists('mail')) {
+    if (function_exists('mail')) {
+        $nl      = mail_line_break();
+        $headers = implode($nl, array(
+            'From: ' . FROM,
+            'MIME-Version: 1.0',
+            'Content-Type: text/plain; charset=UTF-8',
+            'Content-Transfer-Encoding: quoted-printable',
+        ));
+        $body = str_replace("\n", $nl, str_replace("\r\n", "\n", $qpBody)); // body line endings match the headers
+        if (function_exists('error_clear_last')) {
+            error_clear_last();
+        }
+        $sent = @mail(TO, $subject, $body, $headers, '-f' . FROM);
+        if (!$sent) {
+            $sent = @mail(TO, $subject, $body, $headers); // some hosts refuse the -f option
+        }
+        if ($sent) {
+            return 'mail';
+        }
+        $err = error_get_last();
+        $sm  = trim((string) ini_get('sendmail_path'));
+        $trail[] = 'mail() was refused' . ($err ? ' (' . $err['message'] . ')' : '') . ' [sendmail_path: ' . ($sm !== '' ? $sm : 'not set') . ']';
+    } else {
         $trail[] = 'mail() is switched off on this server';
-        return '';
     }
-    $headers = implode("\n", array(
-        'From: PFP Website <' . FROM . '>',
-        'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding: quoted-printable',
-        'X-Mailer: PFP website form',
-    ));
-    if (function_exists('error_clear_last')) {
-        error_clear_last();
+
+    // Last resort: hand the message straight to this server's own mail service (no login, this server only).
+    // It either takes the message, or says in its own words why not - which mail() never does.
+    $why = '';
+    if (smtp_deliver(array('user' => FROM, 'pass' => '', 'host' => 'localhost', 'port' => 25, 'verify' => true), $subject, $qpBody, $why)) {
+        return 'smtp-local';
     }
-    $sent = @mail(TO, $subject, $qpBody, $headers, '-f' . FROM);
-    if (!$sent) {
-        $sent = @mail(TO, $subject, $qpBody, $headers); // some hosts refuse the -f option
-    }
-    if ($sent) {
-        return 'mail';
-    }
-    $err = error_get_last();
-    $sm  = trim((string) ini_get('sendmail_path'));
-    $trail[] = 'mail() was refused' . ($err ? ' (' . $err['message'] . ')' : '') . ' [sendmail_path: ' . ($sm !== '' ? $sm : 'not set') . ']';
+    $trail[] = 'local mail server: ' . $why;
     return '';
 }
 
@@ -574,7 +605,7 @@ function main()
     $lines[] = '--';
     $lines[] = 'Sent automatically by the PFP website form.';
 
-    $body = str_replace("\r\n", "\n", quoted_printable_encode(implode("\r\n", $lines) . "\r\n"));
+    $body = quoted_printable_encode(implode("\r\n", $lines) . "\r\n");
 
     // ---- send it --------------------------------------------------------------
     $trail = array();

@@ -17,6 +17,7 @@ for (const d of ['/home', '/home/u', '/home/u/public_html']) { try { php.mkdir(d
 php.writeFile('/home/u/public_html/send-enquiry.php', fs.readFileSync(phpFile, 'utf8'));
 php.writeFile('/home/u/public_html/wrapper.php', String.raw`<?php
 namespace PFP {
+    function stream_socket_client($a, &$errno = null, &$errstr = null, $t = null, $f = null, $c = null) { $errno = 111; $errstr = 'Connection refused'; return false; }
     function mail($to, $subject, $message, $headers = '', $params = '') {
         $f = '/tmp/mail-calls.json';
         $calls = is_file($f) ? json_decode(file_get_contents($f), true) : array();
