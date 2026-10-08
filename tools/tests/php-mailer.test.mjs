@@ -270,7 +270,7 @@ for (const v of versions) {
     check(`${m} -> Allow: POST`, /POST/.test(r.hdr('Allow')));
   }
   { const r = await call({ method: 'GET', body: '' });
-    check('GET reports php version, mail() and that no mailbox login is set', r.json && /^\d+\.\d+$/.test(r.json.php) && r.json.mail === true && r.json.login === false, r.text);
+    check('GET reports php version, mail(), a build date and that no mailbox login is set', r.json && /^\d+\.\d+$/.test(r.json.php) && r.json.mail === true && r.json.login === false && /^\d{4}-\d{2}-\d{2}$/.test(r.json.build), r.text);
     setPassword('secret');
     const r2 = await call({ method: 'GET', body: '' });
     check('GET reports login:true once the password file exists, and never shows it', r2.json && r2.json.login === true && !/secret/.test(r2.text), r2.text); }

@@ -47,6 +47,7 @@ const PER_SITE         = 120;   // requests the whole site may send ...
 const PER_SITE_SECS    = 3600;  // ... in any hour
 const PASSWORD_FILE    = 'pfp-mail-password.txt';
 const SMTP_BUDGET      = 6;     // seconds to spend on the mailbox login before falling back to mail()
+const BUILD            = '2026-10-08'; // shown when the address is opened in a browser, to tell which version is live
 
 // ---- small helpers ----------------------------------------------------------
 function respond($code, $data)
@@ -506,6 +507,7 @@ function main()
             'ok'      => false,
             'error'   => 'This address only accepts the PFP website form.',
             'service' => 'pfp-enquiry',
+            'build'   => BUILD,
             'php'     => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
             'mail'    => function_exists('mail'),
             'login'   => load_login($note) !== null,
